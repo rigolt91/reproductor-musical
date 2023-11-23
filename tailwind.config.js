@@ -9,7 +9,7 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.jsx',
-        "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+        "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
     ],
 
     theme: {
@@ -19,7 +19,23 @@ export default {
             },
         },
     },
-    darkMode: "class",
-    plugins: [nextui()],
-    plugins: [forms],
+
+    plugins: [nextui({
+        themes: {
+            light: {
+                colors: {
+                    white: "#FFFFFF",
+                    black: "#000000",
+                    primary: {
+                        DEFAULT: "#027DA2",
+                        foreground: "#FFFFFF",
+                    },
+                    danger: {
+                        DEFAULT: "#b91c1c",
+                        foreground: "#FFFFFF",
+                    }
+                }
+            }
+        }
+    })],
 };

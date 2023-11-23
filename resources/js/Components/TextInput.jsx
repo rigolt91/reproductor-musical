@@ -1,23 +1,14 @@
-import { forwardRef, useEffect, useRef } from 'react';
+import { Input } from '@nextui-org/react';
 
-export default forwardRef(function TextInput({ type = 'text', className = '', isFocused = false, ...props }, ref) {
-    const input = ref ? ref : useRef();
-
-    useEffect(() => {
-        if (isFocused) {
-            input.current.focus();
-        }
-    }, []);
-
+export default function TextInput({ label, type = 'text', className = '', isFocused = false, ...props }) {
     return (
-        <input
-            {...props}
-            type={type}
-            className={
-                'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm ' +
-                className
-            }
-            ref={input}
-        />
+        <div className="w-full flex flex-col gap-2 text-gray-600">
+            <Input
+                {...props}
+                type={type}
+                label={label}
+                radius='sm'
+            />
+        </div>
     );
-});
+}

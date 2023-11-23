@@ -1,12 +1,13 @@
-export default function Checkbox({ className = '', ...props }) {
+import { Checkbox as Check } from "@nextui-org/react";
+
+export default function Checkbox({ label, ...props }) {
     return (
-        <input
+        <Check
             {...props}
-            type="checkbox"
-            className={
-                'rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 ' +
-                className
-            }
-        />
+            radius='sm'
+            size="lg"
+        >
+            <span className="ms-2 text-sm text-gray-600">{label}</span>
+        </Check>
     );
 }

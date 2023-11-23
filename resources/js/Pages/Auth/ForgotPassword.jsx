@@ -31,16 +31,15 @@ export default function ForgotPassword({ status }) {
                     id="email"
                     type="email"
                     name="email"
+                    label="Email"
                     value={data.email}
-                    className="mt-1 block w-full"
                     isFocused={true}
                     onChange={(e) => setData('email', e.target.value)}
+                    errorMessage={errors.email}
                 />
 
-                <InputError message={errors.email} className="mt-2" />
-
                 <div className="flex items-center justify-end mt-4">
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <PrimaryButton className="ms-4" isDisabled={processing}>
                         Email Password Reset Link
                     </PrimaryButton>
                 </div>
