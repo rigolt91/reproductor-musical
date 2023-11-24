@@ -5,8 +5,8 @@ export default function ApplicationLogoSm(props) {
     return (
         <Image
             {...props}
-            width={149}
-            height={43}
+            width={114}
+            height={113}
             alt="BCLab"
             src={logo}
         />

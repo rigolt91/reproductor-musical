@@ -1,21 +1,20 @@
-import { useState } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import { Button, Divider, Navbar, ScrollShadow } from '@nextui-org/react';
 import TextInput from '@/Components/TextInput';
 import ApplicationLogoSm from '@/Components/ApplicationLogoSm';
+import NavbarTop from '@/Pages/Components/Layouts/NavBarTop';
+import Footer from '@/Pages/Components/Layouts/Footer';
 
 export default function Authenticated({ user, header, children }) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-    const screenX = document.documentElement.scrollWidth;
+    const {get} = useForm();
+    const screenY = document.documentElement.scrollHeight - 140;
 
     return (
         <div className="bg-gray-100 flex">
-            <Navbar className="fixed w-[60px] lg:w-[268px] z-50 bg-primary shadow-sm min-h-screen">
-                <div className="fixed top-4 w-[60px] lg:w-[220px] -mx-4 lg:mx-0">
+            <Navbar className="w-[60px] lg:w-[310px] z-50 bg-primary shadow-sm min-h-screen">
+                <div className="fixed top-4 w-[60px] lg:w-[200px] -mx-4 lg:mx-0 flex justify-center">
                     <div className="top-0 flex-row justify-between w-full">
                         <div className="flex-row items-center w-full">
                             <div className="shrink-0 flex items-center">
@@ -29,7 +28,7 @@ export default function Authenticated({ user, header, children }) {
 
                             <div className="hidden lg:block flex-row items-center">
                                 <div className="mt-8">
-                                    <Button fullWidth={false} className="flex w-full items-center justify-start shadow-sm hover:shadow-lg hover:bg-white/90 bg-gray-100" radius="sm">
+                                    <Button onClick={() => get('dashboard')} fullWidth={false} className="flex w-full items-center justify-start shadow-sm hover:shadow-lg hover:bg-white/90 bg-gray-100" radius="sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="20" viewBox="0 0 25 20" fill="none">
                                             <path d="M12.1695 5.32271L4.16732 11.9134V19.0267C4.16732 19.2109 4.24048 19.3875 4.37072 19.5177C4.50095 19.648 4.67758 19.7211 4.86176 19.7211L9.72548 19.7086C9.90905 19.7076 10.0848 19.6341 10.2143 19.5039C10.3438 19.3738 10.4165 19.1977 10.4164 19.0141V14.86C10.4164 14.6759 10.4896 14.4992 10.6198 14.369C10.7501 14.2388 10.9267 14.1656 11.1109 14.1656H13.8887C14.0728 14.1656 14.2495 14.2388 14.3797 14.369C14.51 14.4992 14.5831 14.6759 14.5831 14.86V19.0111C14.5828 19.1025 14.6006 19.193 14.6354 19.2775C14.6701 19.362 14.7212 19.4388 14.7857 19.5035C14.8503 19.5682 14.9269 19.6196 15.0113 19.6546C15.0957 19.6897 15.1862 19.7077 15.2776 19.7077L20.1395 19.7211C20.3237 19.7211 20.5004 19.648 20.6306 19.5177C20.7608 19.3875 20.834 19.2109 20.834 19.0267V11.9086L12.8335 5.32271C12.7395 5.24689 12.6223 5.20555 12.5015 5.20555C12.3807 5.20555 12.2635 5.24689 12.1695 5.32271ZM24.8097 9.80231L21.1812 6.81142V0.799703C21.1812 0.661569 21.1263 0.529093 21.0287 0.431418C20.931 0.333743 20.7985 0.27887 20.6604 0.27887H18.2298C18.0917 0.27887 17.9592 0.333743 17.8615 0.431418C17.7639 0.529093 17.709 0.661569 17.709 0.799703V3.95118L13.8231 0.75413C13.4502 0.447263 12.9823 0.279483 12.4993 0.279483C12.0164 0.279483 11.5485 0.447263 11.1756 0.75413L0.189019 9.80231C0.136279 9.8459 0.0926449 9.89945 0.0606102 9.95991C0.0285755 10.0204 0.00876769 10.0866 0.00231864 10.1547C-0.0041304 10.2228 0.00290567 10.2915 0.0230248 10.3569C0.043144 10.4223 0.0759519 10.4831 0.119574 10.5358L1.22634 11.8813C1.26985 11.9342 1.32336 11.978 1.38381 12.0102C1.44426 12.0424 1.51047 12.0623 1.57864 12.0689C1.64681 12.0755 1.71561 12.0685 1.7811 12.0485C1.84659 12.0284 1.90748 11.9957 1.96029 11.952L12.1695 3.54319C12.2635 3.46738 12.3807 3.42604 12.5015 3.42604C12.6223 3.42604 12.7395 3.46738 12.8335 3.54319L23.0432 11.952C23.0959 11.9957 23.1567 12.0285 23.2221 12.0486C23.2875 12.0687 23.3562 12.0758 23.4243 12.0693C23.4924 12.0629 23.5586 12.043 23.6191 12.011C23.6795 11.979 23.7331 11.9353 23.7767 11.8826L24.8835 10.5371C24.927 10.4841 24.9597 10.423 24.9796 10.3573C24.9995 10.2916 25.0062 10.2227 24.9993 10.1544C24.9925 10.0861 24.9722 10.0198 24.9396 9.95941C24.9071 9.89899 24.8629 9.8456 24.8097 9.80231Z" fill="#4B5563"/>
                                         </svg>
@@ -40,6 +39,11 @@ export default function Authenticated({ user, header, children }) {
                                     <TextInput
                                         size="xs"
                                         placeholder="Buscar..."
+                                        startContent={
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                                <path d="M13.1986 11.608H12.3645L12.0688 11.3231C13.3359 9.84582 13.9905 7.83036 13.6315 5.68827C13.1352 2.75477 10.6857 0.412194 7.72937 0.0534209C3.26319 -0.495291 -0.495582 3.26128 0.0534522 7.72484C0.412436 10.6794 2.75639 13.1275 5.69161 13.6235C7.83495 13.9823 9.8516 13.328 11.3298 12.0618L11.6148 12.3572V13.1909L16.1021 17.6755C16.535 18.1082 17.2424 18.1082 17.6753 17.6755C18.1082 17.2429 18.1082 16.5359 17.6753 16.1032L13.1986 11.608ZM6.86358 11.608C4.23456 11.608 2.11233 9.48705 2.11233 6.85956C2.11233 4.23207 4.23456 2.11109 6.86358 2.11109C9.49261 2.11109 11.6148 4.23207 11.6148 6.85956C11.6148 9.48705 9.49261 11.608 6.86358 11.608Z" fill="#4B5563"/>
+                                            </svg>
+                                        }
                                     />
                                 </div>
                                 <div className="mt-2.5">
@@ -102,100 +106,18 @@ export default function Authenticated({ user, header, children }) {
                     </div>
                 </div>
             </Navbar>
-            <div className="p-2">
-                <Navbar className="left-[68px] lg:left-[278px] fixed shadow-md rounded-lg bg-primary flex justify-between" style={{ width: `${screenX > 1000 ? screenX - 288 : screenX - 68}px` }}>
-                    <div className="text-white">
-                        Home
-                    </div>
-
-                    <div className="hidden sm:flex sm:items-center sm:ms-6">
-                        <div className="ms-3 relative">
-                            <Dropdown>
-                                <Dropdown.Trigger>
-                                    <span className="inline-flex rounded-md">
-                                        <button
-                                            type="button"
-                                            className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                        >
-                                            {user.name}
-
-                                            <svg
-                                                className="ms-2 -me-0.5 h-4 w-4"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
-                                        </button>
-                                    </span>
-                                </Dropdown.Trigger>
-
-                                <Dropdown.Content>
-                                    <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
-                                    <Dropdown.Link href={route('logout')} method="post" as="button">
-                                        Log Out
-                                    </Dropdown.Link>
-                                </Dropdown.Content>
-                            </Dropdown>
-                        </div>
-                    </div>
-
-                    <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden bg-white absolute right-16 top-3 rounded-md shadow-lg'}>
-                        <div className="pt-2 pb-3 space-y-1">
-                            <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                Home
-                            </ResponsiveNavLink>
-                        </div>
-
-                        <div className="pt-4 pb-1 border-t border-gray-200">
-                            <div className="px-4">
-                                <div className="font-medium text-base text-gray-800">{user.name}</div>
-                                <div className="font-medium text-sm text-gray-500">{user.email}</div>
-                            </div>
-
-                            <div className="mt-3 space-y-1">
-                                <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                                <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                                    Log Out
-                                </ResponsiveNavLink>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="-me-2 flex items-center sm:hidden">
-                        <button
-                            onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                        >
-                            <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                <path
-                                    className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M4 6h16M4 12h16M4 18h16"
-                                />
-                                <path
-                                    className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                </Navbar>
+            <div className="bg-gray-50 w-full min-h-screen">
+                <div className="mx-6">
+                    <NavbarTop user={user} />
+                </div>
                 <main>
-                    <div className="absolute left-[68px] lg:left-[278px] top-[50px]" style={{ width: `${screenX > 1000 ? screenX - 288 : screenX - 68}px` }}>
+                    <ScrollShadow size={100} className="w-full" style={{ height:`${screenY}px` }}>
                         {children}
-                    </div>
+                    </ScrollShadow>
                 </main>
+                <div className="mx-6">
+                    <Footer />
+                </div>
             </div>
         </div>
     );
