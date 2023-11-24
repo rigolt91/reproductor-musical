@@ -1,7 +1,7 @@
 import { Image } from "@nextui-org/react";
-import logo from '../../../public/img/logo.png';
+import logo from '../../../public/img/sm_logo.png';
 
-export default function ApplicationLogo(props) {
+export default function ApplicationLogoSm(props) {
     return (
         <Image
             {...props}
