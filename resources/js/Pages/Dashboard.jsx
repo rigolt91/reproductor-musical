@@ -1,12 +1,17 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import CardLista from './Components/Dashboard/CardLista';
+import CardLista from './Partials/Dashboard/CardLista';
+import NavLink from '@/Components/NavLink';
 
 export default function Dashboard({ auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+            header={
+                <NavLink href={route('dashboard')} className="text-white hover:text-gray-300 active:text-gray-300">
+                    Home
+                </NavLink>
+            }
         >
             <Head title="Home" />
 

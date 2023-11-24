@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\FileLibraryController;
+use App\Http\Controllers\NewPlaylistController;
+use App\Http\Controllers\PlaylistsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +31,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/playlists', [PlaylistsController::class, 'index'])->middleware(['auth', 'verified'])->name('playlists');
+Route::get('/new-playlist', [NewPlaylistController::class, 'index'])->middleware(['auth', 'verified'])->name('new-playlist');
+Route::get('/file-library', [FileLibraryController::class, 'index'])->middleware(['auth', 'verified'])->name('file-library');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

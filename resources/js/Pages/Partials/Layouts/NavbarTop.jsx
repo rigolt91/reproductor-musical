@@ -4,15 +4,17 @@ import { useForm } from "@inertiajs/react";
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar } from "@nextui-org/react";
 import { useState } from "react";
 
-export default function NavbarTop({ user }) {
+export default function NavbarTop({ user, header }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     const {post} = useForm();
 
     return (
         <Navbar className="shadow-md rounded-lg bg-primary flex justify-between mt-1" maxWidth="full">
-            <NavLink href={route('dashboard')} className="text-white hover:text-gray-300 active:text-gray-300">
-                Home
-            </NavLink>
+            {header &&
+                <div>
+                    {header}
+                </div>
+            }
 
             <div className="hidden sm:flex sm:items-center sm:ms-6">
                 <div className="ms-3">

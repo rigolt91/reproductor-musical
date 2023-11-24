@@ -4,8 +4,8 @@ import { Link, useForm } from '@inertiajs/react';
 import { Button, Divider, Navbar, ScrollShadow } from '@nextui-org/react';
 import TextInput from '@/Components/TextInput';
 import ApplicationLogoSm from '@/Components/ApplicationLogoSm';
-import NavbarTop from '@/Pages/Components/Layouts/NavBarTop';
-import Footer from '@/Pages/Components/Layouts/Footer';
+import NavbarTop from '@/Pages/Partials/Layouts/NavBarTop';
+import Footer from '@/Pages/Partials/Layouts/Footer';
 
 export default function Authenticated({ user, header, children }) {
     const {get} = useForm();
@@ -47,7 +47,7 @@ export default function Authenticated({ user, header, children }) {
                                     />
                                 </div>
                                 <div className="mt-2.5">
-                                    <Button color="primary" className="flex w-full text-white items-center justify-start shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20" radius="sm">
+                                    <Button onClick={() => get('playlists')} color="primary" className="flex w-full text-white items-center justify-start shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20" radius="sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="18" viewBox="0 0 21 18" fill="none">
                                             <path d="M19.0312 18H1.96875C0.881426 18 0 17.1366 0 16.0714V1.92857C0 0.863437 0.881426 0 1.96875 0H19.0312C20.1186 0 21 0.863437 21 1.92857V16.0714C21 17.1366 20.1186 18 19.0312 18ZM5.25 3.53571C4.34392 3.53571 3.60938 4.25527 3.60938 5.14286C3.60938 6.03044 4.34392 6.75 5.25 6.75C6.15608 6.75 6.89062 6.03044 6.89062 5.14286C6.89062 4.25527 6.15608 3.53571 5.25 3.53571ZM5.25 7.39286C4.34392 7.39286 3.60938 8.11242 3.60938 9C3.60938 9.88758 4.34392 10.6071 5.25 10.6071C6.15608 10.6071 6.89062 9.88758 6.89062 9C6.89062 8.11242 6.15608 7.39286 5.25 7.39286ZM5.25 11.25C4.34392 11.25 3.60938 11.9696 3.60938 12.8571C3.60938 13.7447 4.34392 14.4643 5.25 14.4643C6.15608 14.4643 6.89062 13.7447 6.89062 12.8571C6.89062 11.9696 6.15608 11.25 5.25 11.25ZM17.0625 5.78571V4.5C17.0625 4.23374 16.8421 4.01786 16.5703 4.01786H8.36719C8.09538 4.01786 7.875 4.23374 7.875 4.5V5.78571C7.875 6.05198 8.09538 6.26786 8.36719 6.26786H16.5703C16.8421 6.26786 17.0625 6.05198 17.0625 5.78571ZM17.0625 9.64286V8.35714C17.0625 8.09088 16.8421 7.875 16.5703 7.875H8.36719C8.09538 7.875 7.875 8.09088 7.875 8.35714V9.64286C7.875 9.90912 8.09538 10.125 8.36719 10.125H16.5703C16.8421 10.125 17.0625 9.90912 17.0625 9.64286ZM17.0625 13.5V12.2143C17.0625 11.948 16.8421 11.7321 16.5703 11.7321H8.36719C8.09538 11.7321 7.875 11.948 7.875 12.2143V13.5C7.875 13.7663 8.09538 13.9821 8.36719 13.9821H16.5703C16.8421 13.9821 17.0625 13.7663 17.0625 13.5Z" fill="white" fillOpacity="0.8"/>
                                         </svg>
@@ -55,7 +55,7 @@ export default function Authenticated({ user, header, children }) {
                                     </Button>
                                 </div>
                                 <div className="mt-2.5">
-                                    <Button color="primary" className="flex w-full text-white items-center justify-start shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20" radius="sm">
+                                    <Button onClick={() => get('new-playlist')} color="primary" className="flex w-full text-white items-center justify-start shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20" radius="sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="22" viewBox="0 0 21 22" fill="none">
                                             <path d="M18.75 0.5H2.25C1.00781 0.5 0 1.50781 0 2.75V19.25C0 20.4922 1.00781 21.5 2.25 21.5H18.75C19.9922 21.5 21 20.4922 21 19.25V2.75C21 1.50781 19.9922 0.5 18.75 0.5ZM17.25 12.3125C17.25 12.6219 16.9969 12.875 16.6875 12.875H12.375V17.1875C12.375 17.4969 12.1219 17.75 11.8125 17.75H9.1875C8.87813 17.75 8.625 17.4969 8.625 17.1875V12.875H4.3125C4.00313 12.875 3.75 12.6219 3.75 12.3125V9.6875C3.75 9.37813 4.00313 9.125 4.3125 9.125H8.625V4.8125C8.625 4.50313 8.87813 4.25 9.1875 4.25H11.8125C12.1219 4.25 12.375 4.50313 12.375 4.8125V9.125H16.6875C16.9969 9.125 17.25 9.37813 17.25 9.6875V12.3125Z" fill="white" fillOpacity="0.8"/>
                                         </svg>
@@ -63,7 +63,7 @@ export default function Authenticated({ user, header, children }) {
                                     </Button>
                                 </div>
                                 <div className="mt-2.5">
-                                    <Button color="primary" className="flex w-full text-white items-center justify-start shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20" radius="sm">
+                                    <Button onClick={() => get('file-library')} color="primary" className="flex w-full text-white items-center justify-start shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20" radius="sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
                                             <path d="M6.12499 1.51786V4.91071C6.12499 5.47287 5.68427 5.92857 5.14061 5.92857H0.984375C0.440713 5.92857 0 5.47287 0 4.91071V1.51786C0 0.955703 0.440713 0.5 0.984375 0.5H5.14061C5.68427 0.5 6.12499 0.955703 6.12499 1.51786ZM13.5625 11.6964V8.30357C13.5625 7.74142 13.1218 7.28571 12.5781 7.28571H8.42186C7.8782 7.28571 7.43749 7.74142 7.43749 8.30357V11.6964C7.43749 12.2586 7.8782 12.7143 8.42186 12.7143H12.5781C13.1218 12.7143 13.5625 12.2586 13.5625 11.6964ZM14.875 1.51786V4.91071C14.875 5.47287 15.3157 5.92857 15.8594 5.92857H20.0156C20.5593 5.92857 21 5.47287 21 4.91071V1.51786C21 0.955703 20.5593 0.5 20.0156 0.5H15.8594C15.3157 0.5 14.875 0.955703 14.875 1.51786ZM13.5625 4.91071V1.51786C13.5625 0.955703 13.1218 0.5 12.5781 0.5H8.42186C7.8782 0.5 7.43749 0.955703 7.43749 1.51786V4.91071C7.43749 5.47287 7.8782 5.92857 8.42186 5.92857H12.5781C13.1218 5.92857 13.5625 5.47287 13.5625 4.91071ZM5.14061 7.28571H0.984375C0.440713 7.28571 0 7.74142 0 8.30357V11.6964C0 12.2586 0.440713 12.7143 0.984375 12.7143H5.14061C5.68427 12.7143 6.12499 12.2586 6.12499 11.6964V8.30357C6.12499 7.74142 5.68427 7.28571 5.14061 7.28571ZM0 15.0893V18.4821C0 19.0443 0.440713 19.5 0.984375 19.5H5.14061C5.68427 19.5 6.12499 19.0443 6.12499 18.4821V15.0893C6.12499 14.5271 5.68427 14.0714 5.14061 14.0714H0.984375C0.440713 14.0714 0 14.5271 0 15.0893ZM15.8594 12.7143H20.0156C20.5593 12.7143 21 12.2586 21 11.6964V8.30357C21 7.74142 20.5593 7.28571 20.0156 7.28571H15.8594C15.3157 7.28571 14.875 7.74142 14.875 8.30357V11.6964C14.875 12.2586 15.3157 12.7143 15.8594 12.7143ZM15.8594 19.5H20.0156C20.5593 19.5 21 19.0443 21 18.4821V15.0893C21 14.5271 20.5593 14.0714 20.0156 14.0714H15.8594C15.3157 14.0714 14.875 14.5271 14.875 15.0893V18.4821C14.875 19.0443 15.3157 19.5 15.8594 19.5ZM7.43749 15.0893V18.4821C7.43749 19.0443 7.8782 19.5 8.42186 19.5H12.5781C13.1218 19.5 13.5625 19.0443 13.5625 18.4821V15.0893C13.5625 14.5271 13.1218 14.0714 12.5781 14.0714H8.42186C7.8782 14.0714 7.43749 14.5271 7.43749 15.0893Z" fill="white" fillOpacity="0.8"/>
                                         </svg>
@@ -108,7 +108,7 @@ export default function Authenticated({ user, header, children }) {
             </Navbar>
             <div className="bg-gray-50 w-full min-h-screen">
                 <div className="mx-6">
-                    <NavbarTop user={user} />
+                    <NavbarTop user={user} header={header} />
                 </div>
                 <main>
                     <ScrollShadow size={100} className="w-full" style={{ height:`${screenY}px` }}>
