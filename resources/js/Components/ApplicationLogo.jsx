@@ -6,7 +6,7 @@ export default function ApplicationLogo(props) {
         <Image
             {...props}
             width={149}
-            height={43}
+            height={53}
             alt="BCLab"
             src={logo}
         />
