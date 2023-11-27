@@ -9,7 +9,7 @@ import Footer from '@/Pages/Partials/Layouts/Footer';
 
 export default function Authenticated({ user, header, children }) {
     const {get} = useForm();
-    const screenY = document.documentElement.scrollHeight - 140;
+    const screenY = document.documentElement.scrollHeight - 136;
 
     return (
         <div className="bg-gray-100 flex">

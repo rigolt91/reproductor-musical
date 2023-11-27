@@ -8,6 +8,7 @@ export default function TextInput({ label, type = 'text', className = '', isFocu
                 type={type}
                 label={label}
                 radius='sm'
+                className={className}
             />
         </div>
     );
