@@ -14,7 +14,7 @@ export default function CreateListFile({ isOpen, onOpenChange }) {
     });
 
     function handleClickSave() {
-        post('/new-playlist', {
+        post('/playlists', {
             onSuccess: resetForm(),
             preserveScroll: true,
         });

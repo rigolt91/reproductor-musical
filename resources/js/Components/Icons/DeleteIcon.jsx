@@ -1,4 +1,4 @@
-export default function DeleteIcon({ color='#b91c1c', width='14', height='16', className='' }) {
+export default function DeleteIcon({ color='#b91c1c', width='22', height='18', className='' }) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -1,16 +1,16 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
-import NavLink from '@/Components/NavLink';
-import { Link, useForm } from '@inertiajs/react';
-import { Button, Divider, Navbar, ScrollShadow, useDisclosure } from '@nextui-org/react';
+import { useForm } from '@inertiajs/react';
+import { Button, Divider, Link, Navbar, ScrollShadow, useDisclosure } from '@nextui-org/react';
 import TextInput from '@/Components/TextInput';
 import ApplicationLogoSm from '@/Components/ApplicationLogoSm';
 import NavbarTop from '@/Pages/Partials/Layouts/NavBarTop';
 import Footer from '@/Pages/Partials/Layouts/Footer';
-import CreateListFile from '@/Pages/Partials/NewPlaylist/CreateListFile';
+import ListFile from '@/Pages/Partials/Playlist/ListFile';
 import { useState } from 'react';
 import PlusIcon from '@/Components/Icons/PlusIcon';
 import ListIcon from '@/Components/Icons/ListIcon';
 import CubeIcon from '@/Components/Icons/CubeIcon';
+import NavLink from '@/Components/NavLink';
 
 export default function Authenticated({ user, header, children }) {
     const {get} = useForm();
@@ -39,7 +39,7 @@ export default function Authenticated({ user, header, children }) {
 
                             <div className="flex-row items-center hidden lg:block">
                                 <div className="mt-8">
-                                    <Button onPress={() => get('dashboard')} fullWidth={false} className="flex items-center justify-start w-full bg-gray-100 shadow-sm hover:shadow-lg hover:bg-white/90" radius="sm">
+                                    <Button href={route('dashboard')} as={Link} fullWidth={false} className="flex items-center justify-start w-full bg-gray-100 shadow-sm hover:shadow-lg hover:bg-white/90" radius="sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="20" viewBox="0 0 25 20" fill="none">
                                             <path d="M12.1695 5.32271L4.16732 11.9134V19.0267C4.16732 19.2109 4.24048 19.3875 4.37072 19.5177C4.50095 19.648 4.67758 19.7211 4.86176 19.7211L9.72548 19.7086C9.90905 19.7076 10.0848 19.6341 10.2143 19.5039C10.3438 19.3738 10.4165 19.1977 10.4164 19.0141V14.86C10.4164 14.6759 10.4896 14.4992 10.6198 14.369C10.7501 14.2388 10.9267 14.1656 11.1109 14.1656H13.8887C14.0728 14.1656 14.2495 14.2388 14.3797 14.369C14.51 14.4992 14.5831 14.6759 14.5831 14.86V19.0111C14.5828 19.1025 14.6006 19.193 14.6354 19.2775C14.6701 19.362 14.7212 19.4388 14.7857 19.5035C14.8503 19.5682 14.9269 19.6196 15.0113 19.6546C15.0957 19.6897 15.1862 19.7077 15.2776 19.7077L20.1395 19.7211C20.3237 19.7211 20.5004 19.648 20.6306 19.5177C20.7608 19.3875 20.834 19.2109 20.834 19.0267V11.9086L12.8335 5.32271C12.7395 5.24689 12.6223 5.20555 12.5015 5.20555C12.3807 5.20555 12.2635 5.24689 12.1695 5.32271ZM24.8097 9.80231L21.1812 6.81142V0.799703C21.1812 0.661569 21.1263 0.529093 21.0287 0.431418C20.931 0.333743 20.7985 0.27887 20.6604 0.27887H18.2298C18.0917 0.27887 17.9592 0.333743 17.8615 0.431418C17.7639 0.529093 17.709 0.661569 17.709 0.799703V3.95118L13.8231 0.75413C13.4502 0.447263 12.9823 0.279483 12.4993 0.279483C12.0164 0.279483 11.5485 0.447263 11.1756 0.75413L0.189019 9.80231C0.136279 9.8459 0.0926449 9.89945 0.0606102 9.95991C0.0285755 10.0204 0.00876769 10.0866 0.00231864 10.1547C-0.0041304 10.2228 0.00290567 10.2915 0.0230248 10.3569C0.043144 10.4223 0.0759519 10.4831 0.119574 10.5358L1.22634 11.8813C1.26985 11.9342 1.32336 11.978 1.38381 12.0102C1.44426 12.0424 1.51047 12.0623 1.57864 12.0689C1.64681 12.0755 1.71561 12.0685 1.7811 12.0485C1.84659 12.0284 1.90748 11.9957 1.96029 11.952L12.1695 3.54319C12.2635 3.46738 12.3807 3.42604 12.5015 3.42604C12.6223 3.42604 12.7395 3.46738 12.8335 3.54319L23.0432 11.952C23.0959 11.9957 23.1567 12.0285 23.2221 12.0486C23.2875 12.0687 23.3562 12.0758 23.4243 12.0693C23.4924 12.0629 23.5586 12.043 23.6191 12.011C23.6795 11.979 23.7331 11.9353 23.7767 11.8826L24.8835 10.5371C24.927 10.4841 24.9597 10.423 24.9796 10.3573C24.9995 10.2916 25.0062 10.2227 24.9993 10.1544C24.9925 10.0861 24.9722 10.0198 24.9396 9.95941C24.9071 9.89899 24.8629 9.8456 24.8097 9.80231Z" fill="#4B5563"/>
                                         </svg>
@@ -58,7 +58,7 @@ export default function Authenticated({ user, header, children }) {
                                     />
                                 </div>
                                 <div className="mt-2.5">
-                                    <Button onPress={() => get('playlists')} color="primary" className="flex items-center justify-start w-full text-white shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20" radius="sm">
+                                    <Button href={route('playlists.index')} as={Link} color="primary" className="flex items-center justify-start w-full text-white shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20" radius="sm">
                                         <ListIcon color="white" />
                                         <span className="pt-0.5">Listas de reproducción</span>
                                     </Button>
@@ -70,7 +70,7 @@ export default function Authenticated({ user, header, children }) {
                                     </Button>
                                 </div>
                                 <div className="mt-2.5">
-                                    <Button onPress={() => get('file-library')} color="primary" className="flex items-center justify-start w-full text-white shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20" radius="sm">
+                                    <Button href={route('file-library')} as={Link} color="primary" className="flex items-center justify-start w-full text-white shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20" radius="sm">
                                         <CubeIcon color="white" />
                                         <span className="pt-0.5">Biblioteca de archivos</span>
                                     </Button>
@@ -119,7 +119,7 @@ export default function Authenticated({ user, header, children }) {
                     <ScrollShadow size={100} className="w-full" style={{ height:`${screenY}px` }}>
                         {children}
                     </ScrollShadow>
-                    <CreateListFile isOpen={isOpen} onOpenChange={onOpenChange} />
+                    <ListFile isOpen={isOpen} onOpenChange={onOpenChange} />
                 </main>
                 <div className="mx-6">
                     <Footer />
