@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('list_files', function (Blueprint $table) {
             $table->id();
-            $table->strings('title');
+            $table->string('title');
             $table->boolean('active')->default(false);
             $table->timestamps();
         });

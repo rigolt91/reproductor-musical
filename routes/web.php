@@ -33,7 +33,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/playlists', [PlaylistsController::class, 'index'])->middleware(['auth', 'verified'])->name('playlists');
-Route::get('/new-playlist', [NewPlaylistController::class, 'index'])->middleware(['auth', 'verified'])->name('new-playlist');
+Route::resource('/new-playlist', NewPlaylistController::class)
+    ->only('index', 'store')
+    ->middleware(['auth', 'verified']);
 Route::get('/file-library', [FileLibraryController::class, 'index'])->middleware(['auth', 'verified'])->name('file-library');
 
 Route::middleware('auth')->group(function () {
