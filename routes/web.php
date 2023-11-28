@@ -4,6 +4,8 @@ use App\Http\Controllers\FileLibraryController;
 use App\Http\Controllers\NewPlaylistController;
 use App\Http\Controllers\PlaylistsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VisualFileController;
+use App\Models\VisualFile;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,10 +34,12 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/playlists', [PlaylistsController::class, 'index'])->middleware(['auth', 'verified'])->name('playlists');
-Route::resource('/new-playlist', NewPlaylistController::class)
-    ->only('index', 'store')
+Route::resource('/playlists', PlaylistsController::class)
+    ->only('index', 'store', 'create', 'edit', 'show', 'destroy')
     ->middleware(['auth', 'verified']);
+
+Route::post('/visual-file', [PlaylistsController::class, 'storeVisualFile'])->name('visual-file.store')->middleware(['auth', 'verified']);
+
 Route::get('/file-library', [FileLibraryController::class, 'index'])->middleware(['auth', 'verified'])->name('file-library');
 
 Route::middleware('auth')->group(function () {

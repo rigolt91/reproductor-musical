@@ -37,10 +37,11 @@ export default function CreateAudioFile() {
                         </div>
                         <div className="mb-2">
                             <FileInput
-                                id="file_upload"
+                                name="audio_file"
                                 label="Subir archivo"
                                 description="MP3, WAV hasta 250MB"
                                 value={data.file}
+                                onChange={e => setData('file', e.target.files[0])}
                                 className="file:border-0"
                                 icon={
                                     <SoundIcon color="#9ca3af" width="34" height="48" />
@@ -64,7 +65,7 @@ export default function CreateAudioFile() {
                                 <div className="flex justify-between w-full border-b-1">
                                     <div className="text-gray-600">Titulo del archivo</div>
                                     <div className="relative flex items-center justify-center gap-2">
-                                        <Tooltip content="Eliminar">
+                                        <Tooltip showArrow={true} content="Eliminar">
                                             <span className="text-lg cursor-pointer text-default-400 active:opacity-50">
                                                 <DeleteIcon width='16' height='18' className="hover:scale-125" />
                                             </span>
@@ -76,7 +77,7 @@ export default function CreateAudioFile() {
                                 <div className="flex justify-between w-full border-b-1">
                                     <div className="text-gray-600">Titulo del archivo</div>
                                     <div className="relative flex items-center justify-center gap-2">
-                                        <Tooltip content="Eliminar">
+                                        <Tooltip showArrow={true} content="Eliminar">
                                             <span className="text-lg cursor-pointer text-default-400 active:opacity-50">
                                                 <DeleteIcon width='16' height='18' />
                                             </span>
@@ -88,7 +89,7 @@ export default function CreateAudioFile() {
                                 <div className="flex justify-between w-full border-b-1">
                                     <div className="text-gray-600">Titulo del archivo</div>
                                     <div className="relative flex items-center justify-center gap-2">
-                                        <Tooltip content="Eliminar">
+                                        <Tooltip showArrow={true} content="Eliminar">
                                             <span className="text-lg cursor-pointer text-default-400 active:opacity-50">
                                                 <DeleteIcon width='16' height='18' />
                                             </span>
@@ -100,7 +101,7 @@ export default function CreateAudioFile() {
                                 <div className="flex justify-between w-full border-b-1">
                                     <div className="text-gray-600">Titulo del archivo</div>
                                     <div className="relative flex items-center justify-center gap-2">
-                                        <Tooltip content="Eliminar">
+                                        <Tooltip showArrow={true} content="Eliminar">
                                             <span className="text-lg cursor-pointer text-default-400 active:opacity-50">
                                                 <DeleteIcon width='16' height='18' />
                                             </span>
