@@ -13,7 +13,7 @@ import { useRef } from 'react';
 import CreateVisualFile from './Partials/NewPlaylist/CreateVisualFile';
 import CreateAudioFile from './Partials/NewPlaylist/CreateAudioFile';
 
-export default function NewPlaylist({ auth }) {
+export default function NewPlaylist({ auth, listFile }) {
     const titleInput = useRef();
     const fileInput = useRef();
 
@@ -22,20 +22,22 @@ export default function NewPlaylist({ auth }) {
         file: '',
     });
 
+    console.log(listFile);
+
     return(
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <NavLink href={route('new-playlist')} className="text-white hover:text-gray-300 active:text-gray-300">
-                    Nueva lista de reproducción
-                </NavLink>
+                <h3 className="font-normal text-white">
+                    {listFile.title}
+                </h3>
             }
 
         >
             <Head title="Neva lista de reproducción" />
 
             <div className="py-8">
-                <div className="px-6 mx-auto max-w-12xl sm:px-6 lg:px-6">
+                <div className="px-6 mx-auto max-w-12xl">
                     <div className="grid grid-cols-1 gap-4">
                         <CreateVisualFile />
                         <CreateAudioFile />

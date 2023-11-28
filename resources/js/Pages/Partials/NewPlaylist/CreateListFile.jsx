@@ -9,13 +9,20 @@ import TextInput from "@/Components/TextInput";
 export default function CreateListFile({ isOpen, onOpenChange }) {
     const titleInput = useRef();
 
-    const {data, setData, get, post, errors, processing} = useForm({
+    const {data, setData, get, post, errors, reset, processing} = useForm({
         title: '',
     });
 
     function handleClickSave() {
-        console.log('save data');
-        get('new-playlist');
+        post('/new-playlist', {
+            onSuccess: resetForm(),
+            preserveScroll: true,
+        });
+    }
+
+    function resetForm() {
+        reset();
+        onOpenChange();
     }
 
     return (
@@ -29,21 +36,24 @@ export default function CreateListFile({ isOpen, onOpenChange }) {
                     <ModalContent>
                         {(onClose) => (
                             <>
-                                <ModalHeader className="flex items-center gap-x-2 border-b-2 border-primary">
+                                <ModalHeader className="flex items-center border-b-2 gap-x-2 border-primary">
                                     <PlusIcon />
                                     Nueva lista
                                 </ModalHeader>
                                 <ModalBody>
-                                <TextInput
-                                    id="title"
-                                    label="Título"
-                                    baseRef={titleInput}
-                                    value={data.title}
-                                    type="text"
-                                    autoComplete="title"
-                                    autoFocus={true}
-                                    errorMessage={errors.title}
-                                />
+                                    <div className="my-2">
+                                        <TextInput
+                                            id="title"
+                                            label="Título"
+                                            baseRef={titleInput}
+                                            value={data.title}
+                                            onChange={e => setData('title', e.target.value)}
+                                            type="text"
+                                            autoComplete="title"
+                                            autoFocus={true}
+                                            errorMessage={errors.title}
+                                        />
+                                    </div>
                                 </ModalBody>
                                 <ModalFooter>
                                     <DefaultButton color="danger" variant="flat" onPress={onClose}>

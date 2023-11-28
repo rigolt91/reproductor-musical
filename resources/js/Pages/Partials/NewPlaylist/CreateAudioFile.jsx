@@ -22,7 +22,7 @@ export default function CreateAudioFile() {
                 <h3 className="font-bold text-white text-md">Archivos de Audios</h3>
             </CardHeader>
             <CardBody>
-                <div className="flex-row lg:flex lg:grid-cols-2 space-x-4">
+                <div className="flex-row gap-4 lg:flex lg:grid-cols-2">
                     <div className="w-full lg:w-[600px]">
                         <div className="mb-2">
                             <TextInput
@@ -48,7 +48,7 @@ export default function CreateAudioFile() {
                                 errorMessage={errors.title}
                             />
                         </div>
-                        <div className="flex justify-end mt-2 space-x-3">
+                        <div className="flex justify-end mt-2 mb-4 space-x-3 lg:mb-0">
                             <DefaultButton>
                                 Cancelar
                             </DefaultButton>
@@ -59,13 +59,13 @@ export default function CreateAudioFile() {
                     </div>
 
                     <div className="w-full">
-                        <ul className="list-decimal border rounded-lg grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 w-full py-2 px-4">
+                        <ul className="grid w-full grid-cols-1 px-4 py-2 list-decimal border rounded-lg lg:grid-cols-2 2xl:grid-cols-3">
                             <li className="mx-6 my-2">
                                 <div className="flex justify-between w-full border-b-1">
                                     <div className="text-gray-600">Titulo del archivo</div>
-                                    <div className="relative flex items-center gap-2 justify-center">
+                                    <div className="relative flex items-center justify-center gap-2">
                                         <Tooltip content="Eliminar">
-                                            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                                            <span className="text-lg cursor-pointer text-default-400 active:opacity-50">
                                                 <DeleteIcon width='16' height='18' className="hover:scale-125" />
                                             </span>
                                         </Tooltip>
@@ -75,9 +75,9 @@ export default function CreateAudioFile() {
                             <li className="mx-6 my-2">
                                 <div className="flex justify-between w-full border-b-1">
                                     <div className="text-gray-600">Titulo del archivo</div>
-                                    <div className="relative flex items-center gap-2 justify-center">
+                                    <div className="relative flex items-center justify-center gap-2">
                                         <Tooltip content="Eliminar">
-                                            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                                            <span className="text-lg cursor-pointer text-default-400 active:opacity-50">
                                                 <DeleteIcon width='16' height='18' />
                                             </span>
                                         </Tooltip>
@@ -87,9 +87,9 @@ export default function CreateAudioFile() {
                             <li className="mx-6 my-2">
                                 <div className="flex justify-between w-full border-b-1">
                                     <div className="text-gray-600">Titulo del archivo</div>
-                                    <div className="relative flex items-center gap-2 justify-center">
+                                    <div className="relative flex items-center justify-center gap-2">
                                         <Tooltip content="Eliminar">
-                                            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                                            <span className="text-lg cursor-pointer text-default-400 active:opacity-50">
                                                 <DeleteIcon width='16' height='18' />
                                             </span>
                                         </Tooltip>
@@ -99,9 +99,9 @@ export default function CreateAudioFile() {
                             <li className="mx-6 my-2">
                                 <div className="flex justify-between w-full border-b-1">
                                     <div className="text-gray-600">Titulo del archivo</div>
-                                    <div className="relative flex items-center gap-2 justify-center">
+                                    <div className="relative flex items-center justify-center gap-2">
                                         <Tooltip content="Eliminar">
-                                            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                                            <span className="text-lg cursor-pointer text-default-400 active:opacity-50">
                                                 <DeleteIcon width='16' height='18' />
                                             </span>
                                         </Tooltip>
