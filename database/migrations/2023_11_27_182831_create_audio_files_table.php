@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('audio_files', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
             $table->string('file');
             $table->timestamps();
         });

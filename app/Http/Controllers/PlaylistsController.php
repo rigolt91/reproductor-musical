@@ -4,32 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\AudioListFile;
 use App\Models\ListFile;
-use App\Models\VisualFile;
 use App\Models\VisualListFile;
 use Illuminate\Http\Request;
 
 class PlaylistsController extends Controller
 {
     protected $listFile;
-    protected $visualFile;
     protected $visualListFile;
     protected $audioListFile;
 
-    public function __construct(
-        ListFile $listFile,
-        VisualFile $visualFile,
-        VisualListFile $visualListFile,
-        AudioListFile $audioListFile
-    ) {
+    public function __construct(ListFile $listFile, VisualListFile $visualListFile, AudioListFile $audioListFile)
+    {
         $this->listFile = $listFile;
-        $this->visualFile = $visualFile;
         $this->visualListFile = $visualListFile;
         $this->audioListFile = $audioListFile;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return inertia('Playlists', ['listFiles' => $this->listFile->select('id', 'title', 'active')->get()]);
+        return inertia('Playlists', ['listFiles' => $this->listFile->select('id', 'title', 'active')->search($request->search)->get()]);
     }
 
     public function store(Request $request)
@@ -45,7 +38,8 @@ class PlaylistsController extends Controller
 
         return inertia('Partials/Playlist/Playlist', [
             'listFile' => $listFile,
-            'visualListFile' => $this->visualListFile->where('list_file_id', $id)->with('visualFile')->get()
+            'visualListFile' => $this->visualListFile->where('list_file_id', $id)->with('visualFile')->get(),
+            'audioListFile' => $this->audioListFile->where('list_file_id', $id)->with('audioFile')->get()
         ]);
     }
 
@@ -69,34 +63,5 @@ class PlaylistsController extends Controller
         }
 
         return to_route('playlists.index');
-    }
-
-    public function storeVisualFile(Request $request)
-    {
-        $request->validate([
-            'title' => 'required',
-            'file' => 'required|mimes:png,jpg,mpg,avi,mp4|max:256000',
-        ]);
-
-        $path = $request->file('file')->store('public/visual_files');
-
-        $visualFile = $this->visualFile->create(['title' => $request->title, 'file' => $path]);
-
-        $listFile = $this->listFile->find($request->listFileId);
-
-        $listFile->visualListFiles()->create(['visual_file_id' => $visualFile->id]);
-
-        return to_route('playlists.edit', $request->listFileId);
-    }
-
-    public function destroyVisualFile($id)
-    {
-        $visualListFile = $this->visualListFile->find($id);
-
-        $listFileId = $visualListFile->list_file_id;
-
-        $visualListFile->delete();
-
-        return to_route('playlists.edit', $listFileId);
     }
 }

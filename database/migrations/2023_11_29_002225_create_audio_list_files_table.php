@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('audio_list_files', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('list_file_id')->constrained();
-            $table->foreignId('audio_file_id')->constrained();
+            $table->foreignId('list_file_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('audio_file_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

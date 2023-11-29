@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
+import React, { useRef } from "react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter} from "@nextui-org/react";
 import { useForm } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import DefaultButton from "@/Components/DefaultButton";
@@ -9,11 +9,12 @@ import TextInput from "@/Components/TextInput";
 export default function CreateListFile({ isOpen, onOpenChange }) {
     const titleInput = useRef();
 
-    const {data, setData, get, post, errors, reset, processing} = useForm({
+    const {data, setData, post, errors, reset, processing} = useForm({
         title: '',
     });
 
-    function handleClickSave() {
+    function submit(e) {
+        e.preventDefault();
         post('/playlists', {
             onSuccess: resetForm(),
             preserveScroll: true,
@@ -35,7 +36,7 @@ export default function CreateListFile({ isOpen, onOpenChange }) {
                 >
                     <ModalContent>
                         {(onClose) => (
-                            <>
+                            <form onSubmit={submit}>
                                 <ModalHeader className="flex items-center border-b-2 gap-x-2 border-primary">
                                     <PlusIcon />
                                     Nueva lista
@@ -51,19 +52,29 @@ export default function CreateListFile({ isOpen, onOpenChange }) {
                                             type="text"
                                             autoComplete="title"
                                             autoFocus={true}
+                                            required
                                             errorMessage={errors.title}
                                         />
                                     </div>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <DefaultButton color="danger" variant="flat" onPress={onClose}>
+                                    <DefaultButton
+                                        color="danger"
+                                        variant="flat"
+                                        onPress={onClose}
+                                        disabled={processing}
+                                    >
                                         Cancelar
                                     </DefaultButton>
-                                    <PrimaryButton color="primary" onPress={handleClickSave}>
+                                    <PrimaryButton
+                                        type="submit"
+                                        color="primary"
+                                        disabled={processing}
+                                    >
                                         Guardar
                                     </PrimaryButton>
                                 </ModalFooter>
-                            </>
+                            </form>
                         )}
                     </ModalContent>
                 </Modal>

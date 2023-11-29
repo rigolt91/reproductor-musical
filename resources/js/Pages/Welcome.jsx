@@ -2,7 +2,7 @@ import { Link, Head } from '@inertiajs/react';
 import { Divider, Image } from '@nextui-org/react';
 import imgTarjeta from '../../../public/img/tarjeta.png';
 
-export default function Welcome({ auth, laravelVersion, phpVersion }) {
+export default function Welcome({ auth, playlists }) {
     return (
         <>
             <Head title="Welcome" />
@@ -27,7 +27,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     )}
                 </div>
             </div>
-
+            <div className="max-w-12xl p-0">
+                {console.log(playlists)}
+            </div>
             <div className="max-w-12xl p-0">
                 <div className="h-[150px] w-full fixed flex bottom-0 rounded-b-md bg-[#027DA2]">
                     <div className="flex p-10 items-center justify-center w-[200px] lg:w-[336px]">

@@ -1,18 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm } from "@inertiajs/react";
-import { useRef } from 'react';
+import { Head } from "@inertiajs/react";
 import VisualFile from './VisualFile';
 import AudioFile from './AudioFile';
 
-export default function Playlist({ auth, listFile, visualListFile }) {
-    const titleInput = useRef();
-    const fileInput = useRef();
-
-    const {data, setData, post, errors, processing, reset} = useForm({
-        title: '',
-        file: '',
-    });
-
+export default function Playlist({ auth, listFile, visualListFile, audioListFile }) {
     return(
         <AuthenticatedLayout
             user={auth.user}
@@ -29,7 +20,7 @@ export default function Playlist({ auth, listFile, visualListFile }) {
                 <div className="px-6 mx-auto max-w-12xl">
                     <div className="grid grid-cols-1 gap-4">
                         <VisualFile listFile={listFile.id} visualListFile={visualListFile} />
-                        <AudioFile />
+                        <AudioFile listFile={listFile.id} audioListFile={audioListFile} />
                     </div>
                 </div>
             </div>
