@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('visual_list_files', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('list_file_id')->constrained();
-            $table->foreignId('visual_file_id')->constrained();
+            $table->foreignId('list_file_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('visual_file_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

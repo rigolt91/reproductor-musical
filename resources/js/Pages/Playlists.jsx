@@ -6,10 +6,10 @@ import StopIcon from '@/Components/Icons/StopIcon';
 import NavLink from '@/Components/NavLink';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from "@inertiajs/react";
-import { Card, CardBody, CardHeader, Divider, Tooltip } from '@nextui-org/react';
+import { Card, CardBody, CardHeader, Tooltip } from '@nextui-org/react';
 
 export default function Playlists({ auth, listFiles }) {
-    const {get, post, delete: destroy} = useForm();
+    const {get, delete: destroy, processing} = useForm();
 
     return(
         <AuthenticatedLayout
@@ -39,21 +39,37 @@ export default function Playlists({ auth, listFiles }) {
                                         <div className="flex items-center justify-end px-2 gap-2">
                                         <Tooltip showArrow={true} content={active ? 'Detener' : 'Reproducir'}>
                                             <span className="text-lg cursor-pointer text-default-400 active:opacity-50">
-                                                <DefaultButton onPress={() => get(`playlists/${id}`)} color={active ? 'success' : 'default'} isIconOnly className="hover:scale-125 transition duration-200">
+                                                <DefaultButton
+                                                    isIconOnly
+                                                    onPress={() => get(`playlists/${id}`)}
+                                                    color={active ? 'success' : 'default'}
+                                                    disabled={processing}
+                                                    className="hover:scale-125 transition duration-200"
+                                                >
                                                     {active ? <StopIcon /> : <PlayIcon />}
                                                 </DefaultButton>
                                             </span>
                                         </Tooltip>
                                         <Tooltip showArrow={true} content="Editar">
                                             <span className="text-lg cursor-pointer text-default-400 active:opacity-50">
-                                                <DefaultButton onPress={() => get(`playlists/${id}/edit`)} isIconOnly className="hover:scale-125 transition duration-200">
+                                                <DefaultButton
+                                                    isIconOnly
+                                                    onPress={() => get(`playlists/${id}/edit`)}
+                                                    disabled={processing}
+                                                    className="hover:scale-125 transition duration-200"
+                                                >
                                                     <EditIcon />
                                                 </DefaultButton>
                                             </span>
                                         </Tooltip>
                                         <Tooltip showArrow={true} content="Eliminar">
                                             <span className="text-lg cursor-pointer text-default-400 active:opacity-50">
-                                                <DefaultButton onPress={() => destroy(`playlists/${id}`)} isIconOnly className="hover:scale-125 transition duration-200">
+                                                <DefaultButton
+                                                    isIconOnly
+                                                    onPress={() => destroy(`playlists/${id}`)}
+                                                    disabled={processing}
+                                                    className="hover:scale-125 transition duration-200"
+                                                >
                                                     <DeleteIcon />
                                                 </DefaultButton>
                                             </span>

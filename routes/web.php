@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\AudioFileController;
 use App\Http\Controllers\FileLibraryController;
-use App\Http\Controllers\NewPlaylistController;
 use App\Http\Controllers\PlaylistsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VisualFileController;
-use App\Models\VisualFile;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,25 +21,21 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [PlaylistsController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('/playlists', PlaylistsController::class)
     ->only('index', 'store', 'create', 'edit', 'show', 'destroy')
     ->middleware(['auth', 'verified']);
 
-Route::post('/visual-file', [PlaylistsController::class, 'storeVisualFile'])->name('visual-file.store')->middleware(['auth', 'verified']);
-Route::delete('/visual-file/{id}', [PlaylistsController::class, 'destroyVisualFile'])->name('visual-file.destroy')->middleware(['auth', 'verified']);
+Route::resource('/visual-file', VisualFileController::class)
+    ->only('store', 'destroy')
+    ->middleware(['auth', 'verified']);
+
+Route::resource('/audio-file', AudioFileController::class)
+    ->only('store', 'destroy')
+    ->middleware(['auth', 'verified']);
 
 Route::get('/file-library', [FileLibraryController::class, 'index'])->middleware(['auth', 'verified'])->name('file-library');
 

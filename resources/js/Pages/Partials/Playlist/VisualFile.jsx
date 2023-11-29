@@ -5,13 +5,13 @@ import FileIcon from "@/Components/Icons/FileIcon";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
-import { Card, CardBody, CardHeader, Progress, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Image, Progress, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from "@nextui-org/react";
 import { useRef } from "react";
 
 export default function CreateVisualFile({ listFile, visualListFile }) {
     const titleInput = useRef();
 
-    const {data, setData, post, delete: destroy, errors, progress, reset} = useForm({
+    const {data, setData, post, delete: destroy, errors, progress, reset, processing} = useForm({
         listFileId: listFile,
         title: '',
         file: '',
@@ -22,8 +22,6 @@ export default function CreateVisualFile({ listFile, visualListFile }) {
         post('/visual-file', {
             onSuccess: () => reset(),
             preserveScroll: true,
-        }, {
-            forceFormData: true,
         });
     }
 
@@ -59,6 +57,7 @@ export default function CreateVisualFile({ listFile, visualListFile }) {
                                     icon={
                                         <FileIcon color="#9ca3af" width="30" height="48" />
                                     }
+                                    file={data.file && data.file}
                                     errorMessage={errors.file}
                                 />
                                 {progress && (
@@ -66,24 +65,26 @@ export default function CreateVisualFile({ listFile, visualListFile }) {
                                 )}
                             </div>
                             <div className="flex justify-end mt-2 mb-4 space-x-3 lg:mb-0">
-                                <DefaultButton type="submit">
+                                <DefaultButton type="button" onPress={() => reset()}>
                                     Cancelar
                                 </DefaultButton>
-                                <PrimaryButton>
+                                <PrimaryButton disabled={processing}>
                                     Guardar
                                 </PrimaryButton>
                             </div>
                         </form>
                     </div>
 
-                    <div className="w-full">
+                    <div className="w-full h-full border rounded-lg p-1">
                         <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4">
                             {visualListFile.map((visualFile) => (
                                 <li key={visualFile.id} className="p-2 border rounded-lg bg-gray-50 hover:bg-gray-100 hover:shadow-lg">
-                                    <CardItem
+                                    <Li
                                         key={visualFile.visual_file.id}
                                         title={visualFile.visual_file.title}
-                                        handleClick={() => destroy(`visual-file/${visualFile.id}`)}
+                                        file={visualFile.visual_file.file}
+                                        extension={visualFile.visual_file.extension}
+                                        handleClick={() => destroy(`/visual-file/${visualFile.id}`)}
                                     />
                                 </li>
                             ))}
@@ -95,12 +96,19 @@ export default function CreateVisualFile({ listFile, visualListFile }) {
     );
 }
 
-const CardItem = ({ title, handleClick }) => {
+const Li = ({ title, file, extension, handleClick }) => {
     return (
         <div className="flex w-full">
-            <div className="h-16 bg-gray-100 border rounded-lg w-28">
+            {extension == 'png' || extension == 'jpg' || extension == 'jpeg'
+                ?  <Image
+                        alt="NextUI hero Image"
+                        radius="sm"
+                        className="border bg-primary w-32 h-16"
+                        src={`../../storage/images/${file}`}
+                    />
+                : ''
+            }
 
-            </div>
             <div className="flex items-center justify-between w-full px-3">
                 <div className="text-gray-600">{title}</div>
                 <div className="relative flex items-center justify-center gap-2">

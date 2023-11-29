@@ -13,7 +13,9 @@ import CubeIcon from '@/Components/Icons/CubeIcon';
 import NavLink from '@/Components/NavLink';
 
 export default function Authenticated({ user, header, children }) {
-    const {get} = useForm();
+    const {data, setData, get} = useForm({
+        search: ''
+    });
     const screenY = document.documentElement.scrollHeight - 136;
     const [openModalCreateListFile, setOpenModalCreateListFile] = useState(false);
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -47,15 +49,22 @@ export default function Authenticated({ user, header, children }) {
                                     </Button>
                                 </div>
                                 <div className="mt-2.5">
-                                    <TextInput
-                                        size="xs"
-                                        placeholder="Buscar..."
-                                        startContent={
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                                                <path d="M13.1986 11.608H12.3645L12.0688 11.3231C13.3359 9.84582 13.9905 7.83036 13.6315 5.68827C13.1352 2.75477 10.6857 0.412194 7.72937 0.0534209C3.26319 -0.495291 -0.495582 3.26128 0.0534522 7.72484C0.412436 10.6794 2.75639 13.1275 5.69161 13.6235C7.83495 13.9823 9.8516 13.328 11.3298 12.0618L11.6148 12.3572V13.1909L16.1021 17.6755C16.535 18.1082 17.2424 18.1082 17.6753 17.6755C18.1082 17.2429 18.1082 16.5359 17.6753 16.1032L13.1986 11.608ZM6.86358 11.608C4.23456 11.608 2.11233 9.48705 2.11233 6.85956C2.11233 4.23207 4.23456 2.11109 6.86358 2.11109C9.49261 2.11109 11.6148 4.23207 11.6148 6.85956C11.6148 9.48705 9.49261 11.608 6.86358 11.608Z" fill="#4B5563"/>
-                                            </svg>
-                                        }
-                                    />
+                                    <form onSubmit={(e) => {
+                                        e.preventDefault();
+                                        get('/playlists')}
+                                    }>
+                                        <TextInput
+                                            size="xs"
+                                            placeholder="Buscar..."
+                                            value={data.search}
+                                            onChange={e => setData('search', e.target.value)}
+                                            startContent={
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                                    <path d="M13.1986 11.608H12.3645L12.0688 11.3231C13.3359 9.84582 13.9905 7.83036 13.6315 5.68827C13.1352 2.75477 10.6857 0.412194 7.72937 0.0534209C3.26319 -0.495291 -0.495582 3.26128 0.0534522 7.72484C0.412436 10.6794 2.75639 13.1275 5.69161 13.6235C7.83495 13.9823 9.8516 13.328 11.3298 12.0618L11.6148 12.3572V13.1909L16.1021 17.6755C16.535 18.1082 17.2424 18.1082 17.6753 17.6755C18.1082 17.2429 18.1082 16.5359 17.6753 16.1032L13.1986 11.608ZM6.86358 11.608C4.23456 11.608 2.11233 9.48705 2.11233 6.85956C2.11233 4.23207 4.23456 2.11109 6.86358 2.11109C9.49261 2.11109 11.6148 4.23207 11.6148 6.85956C11.6148 9.48705 9.49261 11.608 6.86358 11.608Z" fill="#4B5563"/>
+                                                </svg>
+                                            }
+                                        />
+                                    </form>
                                 </div>
                                 <div className="mt-2.5">
                                     <Button href={route('playlists.index')} as={Link} color="primary" className="flex items-center justify-start w-full text-white shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20" radius="sm">
@@ -67,12 +76,6 @@ export default function Authenticated({ user, header, children }) {
                                     <Button onPress={onOpen} color="primary" className="flex items-center justify-start w-full text-white shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20" radius="sm">
                                         <PlusIcon color="white" />
                                         <span className="pt-0.5">Nueva lista</span>
-                                    </Button>
-                                </div>
-                                <div className="mt-2.5">
-                                    <Button href={route('file-library')} as={Link} color="primary" className="flex items-center justify-start w-full text-white shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20" radius="sm">
-                                        <CubeIcon color="white" />
-                                        <span className="pt-0.5">Biblioteca de archivos</span>
                                     </Button>
                                 </div>
                             </div>
@@ -96,13 +99,6 @@ export default function Authenticated({ user, header, children }) {
                                     <NavLink className="px-2 py-2 rounded-md shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="22" viewBox="0 0 21 22" fill="none">
                                             <path d="M18.75 0.5H2.25C1.00781 0.5 0 1.50781 0 2.75V19.25C0 20.4922 1.00781 21.5 2.25 21.5H18.75C19.9922 21.5 21 20.4922 21 19.25V2.75C21 1.50781 19.9922 0.5 18.75 0.5ZM17.25 12.3125C17.25 12.6219 16.9969 12.875 16.6875 12.875H12.375V17.1875C12.375 17.4969 12.1219 17.75 11.8125 17.75H9.1875C8.87813 17.75 8.625 17.4969 8.625 17.1875V12.875H4.3125C4.00313 12.875 3.75 12.6219 3.75 12.3125V9.6875C3.75 9.37813 4.00313 9.125 4.3125 9.125H8.625V4.8125C8.625 4.50313 8.87813 4.25 9.1875 4.25H11.8125C12.1219 4.25 12.375 4.50313 12.375 4.8125V9.125H16.6875C16.9969 9.125 17.25 9.37813 17.25 9.6875V12.3125Z" fill="white" fillOpacity="0.8"/>
-                                        </svg>
-                                    </NavLink>
-                                </div>
-                                <div className="mt-2.5">
-                                    <NavLink className="px-2 py-2 rounded-md shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
-                                            <path d="M6.12499 1.51786V4.91071C6.12499 5.47287 5.68427 5.92857 5.14061 5.92857H0.984375C0.440713 5.92857 0 5.47287 0 4.91071V1.51786C0 0.955703 0.440713 0.5 0.984375 0.5H5.14061C5.68427 0.5 6.12499 0.955703 6.12499 1.51786ZM13.5625 11.6964V8.30357C13.5625 7.74142 13.1218 7.28571 12.5781 7.28571H8.42186C7.8782 7.28571 7.43749 7.74142 7.43749 8.30357V11.6964C7.43749 12.2586 7.8782 12.7143 8.42186 12.7143H12.5781C13.1218 12.7143 13.5625 12.2586 13.5625 11.6964ZM14.875 1.51786V4.91071C14.875 5.47287 15.3157 5.92857 15.8594 5.92857H20.0156C20.5593 5.92857 21 5.47287 21 4.91071V1.51786C21 0.955703 20.5593 0.5 20.0156 0.5H15.8594C15.3157 0.5 14.875 0.955703 14.875 1.51786ZM13.5625 4.91071V1.51786C13.5625 0.955703 13.1218 0.5 12.5781 0.5H8.42186C7.8782 0.5 7.43749 0.955703 7.43749 1.51786V4.91071C7.43749 5.47287 7.8782 5.92857 8.42186 5.92857H12.5781C13.1218 5.92857 13.5625 5.47287 13.5625 4.91071ZM5.14061 7.28571H0.984375C0.440713 7.28571 0 7.74142 0 8.30357V11.6964C0 12.2586 0.440713 12.7143 0.984375 12.7143H5.14061C5.68427 12.7143 6.12499 12.2586 6.12499 11.6964V8.30357C6.12499 7.74142 5.68427 7.28571 5.14061 7.28571ZM0 15.0893V18.4821C0 19.0443 0.440713 19.5 0.984375 19.5H5.14061C5.68427 19.5 6.12499 19.0443 6.12499 18.4821V15.0893C6.12499 14.5271 5.68427 14.0714 5.14061 14.0714H0.984375C0.440713 14.0714 0 14.5271 0 15.0893ZM15.8594 12.7143H20.0156C20.5593 12.7143 21 12.2586 21 11.6964V8.30357C21 7.74142 20.5593 7.28571 20.0156 7.28571H15.8594C15.3157 7.28571 14.875 7.74142 14.875 8.30357V11.6964C14.875 12.2586 15.3157 12.7143 15.8594 12.7143ZM15.8594 19.5H20.0156C20.5593 19.5 21 19.0443 21 18.4821V15.0893C21 14.5271 20.5593 14.0714 20.0156 14.0714H15.8594C15.3157 14.0714 14.875 14.5271 14.875 15.0893V18.4821C14.875 19.0443 15.3157 19.5 15.8594 19.5ZM7.43749 15.0893V18.4821C7.43749 19.0443 7.8782 19.5 8.42186 19.5H12.5781C13.1218 19.5 13.5625 19.0443 13.5625 18.4821V15.0893C13.5625 14.5271 13.1218 14.0714 12.5781 14.0714H8.42186C7.8782 14.0714 7.43749 14.5271 7.43749 15.0893Z" fill="white" fillOpacity="0.8"/>
                                         </svg>
                                     </NavLink>
                                 </div>

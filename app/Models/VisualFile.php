@@ -9,7 +9,7 @@ class VisualFile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'file'];
+    protected $fillable = ['title', 'file', 'extension'];
 
     public function visualListFile()
     {
