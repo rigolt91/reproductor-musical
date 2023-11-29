@@ -8,10 +8,10 @@ import { useForm } from "@inertiajs/react";
 import { Card, CardBody, CardHeader, Progress, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from "@nextui-org/react";
 import { useRef } from "react";
 
-export default function CreateVisualFile({ listFile }) {
+export default function CreateVisualFile({ listFile, visualListFile }) {
     const titleInput = useRef();
 
-    const {data, setData, post, errors, progress, reset} = useForm({
+    const {data, setData, post, delete: destroy, errors, progress, reset} = useForm({
         listFileId: listFile,
         title: '',
         file: '',
@@ -25,10 +25,6 @@ export default function CreateVisualFile({ listFile }) {
         }, {
             forceFormData: true,
         });
-    }
-
-    function handleClickDelete() {
-        console.log('Eliminar');
     }
 
     return (
@@ -81,10 +77,17 @@ export default function CreateVisualFile({ listFile }) {
                     </div>
 
                     <div className="w-full">
-                        <CardItem
-                            title="Titulo del Archivo"
-                            handleClick={() => handleClickDelete()}
-                        />
+                        <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4">
+                            {visualListFile.map((visualFile) => (
+                                <li key={visualFile.id} className="p-2 border rounded-lg bg-gray-50 hover:bg-gray-100 hover:shadow-lg">
+                                    <CardItem
+                                        key={visualFile.visual_file.id}
+                                        title={visualFile.visual_file.title}
+                                        handleClick={() => destroy(`visual-file/${visualFile.id}`)}
+                                    />
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
             </CardBody>
@@ -94,24 +97,20 @@ export default function CreateVisualFile({ listFile }) {
 
 const CardItem = ({ title, handleClick }) => {
     return (
-        <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">
-            <li className="p-2 border rounded-lg bg-gray-50 hover:bg-gray-100 hover:shadow-lg">
-                <div className="flex w-full">
-                    <div className="h-16 bg-gray-100 border rounded-lg w-28">
+        <div className="flex w-full">
+            <div className="h-16 bg-gray-100 border rounded-lg w-28">
 
-                    </div>
-                    <div className="flex items-center justify-between w-full px-3">
-                        <div className="text-gray-600">{title}</div>
-                        <div className="relative flex items-center justify-center gap-2">
-                            <Tooltip showArrow={true} content="Eliminar">
-                                <span onClick={handleClick} className="text-lg cursor-pointer text-default-400 active:opacity-50">
-                                    <DeleteIcon width='16' height='18' className="hover:scale-150" />
-                                </span>
-                            </Tooltip>
-                        </div>
-                    </div>
+            </div>
+            <div className="flex items-center justify-between w-full px-3">
+                <div className="text-gray-600">{title}</div>
+                <div className="relative flex items-center justify-center gap-2">
+                    <Tooltip showArrow={true} content="Eliminar">
+                        <span onClick={handleClick} className="text-lg cursor-pointer text-default-400 active:opacity-50">
+                            <DeleteIcon width='16' height='18' className="hover:scale-150" />
+                        </span>
+                    </Tooltip>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
     );
 }

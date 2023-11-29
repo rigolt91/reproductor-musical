@@ -10,4 +10,9 @@ class VisualFile extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'file'];
+
+    public function visualListFile()
+    {
+        return $this->hasOne(VisualListFile::class);
+    }
 }

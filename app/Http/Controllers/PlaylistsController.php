@@ -2,21 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AudioListFile;
 use App\Models\ListFile;
 use App\Models\VisualFile;
+use App\Models\VisualListFile;
 use Illuminate\Http\Request;
 
 class PlaylistsController extends Controller
 {
     protected $listFile;
     protected $visualFile;
+    protected $visualListFile;
+    protected $audioListFile;
 
     public function __construct(
         ListFile $listFile,
-        VisualFile $visualFile
+        VisualFile $visualFile,
+        VisualListFile $visualListFile,
+        AudioListFile $audioListFile
     ) {
         $this->listFile = $listFile;
         $this->visualFile = $visualFile;
+        $this->visualListFile = $visualListFile;
+        $this->audioListFile = $audioListFile;
     }
 
     public function index()
@@ -33,7 +41,12 @@ class PlaylistsController extends Controller
 
     public function edit($id)
     {
-        return inertia('Partials/Playlist/Playlist', ['listFile' => $this->listFile->findOrFail($id)]);
+        $listFile = $this->listFile->findOrFail($id);
+
+        return inertia('Partials/Playlist/Playlist', [
+            'listFile' => $listFile,
+            'visualListFile' => $this->visualListFile->where('list_file_id', $id)->with('visualFile')->get()
+        ]);
     }
 
     public function destroy($id)
@@ -65,10 +78,25 @@ class PlaylistsController extends Controller
             'file' => 'required|mimes:png,jpg,mpg,avi,mp4|max:256000',
         ]);
 
-        $path = $request->file('file')->store('visual_files');
+        $path = $request->file('file')->store('public/visual_files');
 
-        $this->visualFile->create(['title' => $request->title, 'file' => $path]);
+        $visualFile = $this->visualFile->create(['title' => $request->title, 'file' => $path]);
+
+        $listFile = $this->listFile->find($request->listFileId);
+
+        $listFile->visualListFiles()->create(['visual_file_id' => $visualFile->id]);
 
         return to_route('playlists.edit', $request->listFileId);
+    }
+
+    public function destroyVisualFile($id)
+    {
+        $visualListFile = $this->visualListFile->find($id);
+
+        $listFileId = $visualListFile->list_file_id;
+
+        $visualListFile->delete();
+
+        return to_route('playlists.edit', $listFileId);
     }
 }

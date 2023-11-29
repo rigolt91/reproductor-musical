@@ -11,13 +11,13 @@ class ListFile extends Model
 
     protected $fillable = ['title', 'active'];
 
-    public function audioFiles()
+    public function audioListFiles()
     {
-        return $this->hasManyThrough(AudioFile::class, VisualAudioFile::class);
+        return $this->hasOne(AudioListFile::class);
     }
 
-    public function visualFiles()
+    public function visualListFiles()
     {
-        return $this->hasManyThrough(VisualFile::class, VisualAudioFile::class);
+        return $this->hasOne(VisualListFile::class);
     }
 }

@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import VisualFile from './VisualFile';
 import AudioFile from './AudioFile';
 
-export default function Playlist({ auth, listFile }) {
+export default function Playlist({ auth, listFile, visualListFile }) {
     const titleInput = useRef();
     const fileInput = useRef();
 
@@ -28,7 +28,7 @@ export default function Playlist({ auth, listFile }) {
             <div className="py-8">
                 <div className="px-6 mx-auto max-w-12xl">
                     <div className="grid grid-cols-1 gap-4">
-                        <VisualFile listFile={listFile.id} />
+                        <VisualFile listFile={listFile.id} visualListFile={visualListFile} />
                         <AudioFile />
                     </div>
                 </div>
