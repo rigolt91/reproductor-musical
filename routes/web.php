@@ -39,6 +39,7 @@ Route::resource('/playlists', PlaylistsController::class)
     ->middleware(['auth', 'verified']);
 
 Route::post('/visual-file', [PlaylistsController::class, 'storeVisualFile'])->name('visual-file.store')->middleware(['auth', 'verified']);
+Route::delete('/visual-file/{id}', [PlaylistsController::class, 'destroyVisualFile'])->name('visual-file.destroy')->middleware(['auth', 'verified']);
 
 Route::get('/file-library', [FileLibraryController::class, 'index'])->middleware(['auth', 'verified'])->name('file-library');
 
