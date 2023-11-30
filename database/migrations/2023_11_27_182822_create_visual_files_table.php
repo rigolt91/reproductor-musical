@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('visual_files', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('list_file_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->string('file');
             $table->string('extension');

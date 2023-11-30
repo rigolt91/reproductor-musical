@@ -10,16 +10,16 @@ class ListFile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'active'];
+    protected $fillable = ['title', 'active', 'list_file_id'];
 
-    public function audioListFiles()
+    public function audioFiles()
     {
-        return $this->hasOne(AudioListFile::class);
+        return $this->hasOne(AudioFile::class);
     }
 
-    public function visualListFiles()
+    public function visualFiles()
     {
-        return $this->hasOne(VisualListFile::class);
+        return $this->hasOne(VisualFile::class);
     }
 
     public function scopeSearch(Builder $query, $title)

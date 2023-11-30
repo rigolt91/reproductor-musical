@@ -6,7 +6,7 @@ import StopIcon from '@/Components/Icons/StopIcon';
 import NavLink from '@/Components/NavLink';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from "@inertiajs/react";
-import { Card, CardBody, CardHeader, Tooltip } from '@nextui-org/react';
+import { Card, CardBody, CardHeader, Image, Tooltip } from '@nextui-org/react';
 
 export default function Playlists({ auth, listFiles }) {
     const {get, delete: destroy, processing} = useForm();
@@ -26,13 +26,26 @@ export default function Playlists({ auth, listFiles }) {
             <div className="py-8">
                 <div className="px-6 mx-auto max-w-12xl sm:px-6 lg:px-6">
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-3 2xl:grid-cols-4">
-                        {listFiles.map(({id, title, active}) => (
-                            <Card key={id} radius="sm" className="text-white bg-primary">
-                                <CardHeader className="w-full h-[200px] bg-gray-50 rounded-lg">
-
-                                </CardHeader>
-                                <CardBody>
-                                    <div className="flex items-center justify-between mt-2">
+                        {listFiles.map(({id, title, active, visual_files}) => (
+                            <Card key={id} radius="sm" className="text-white">
+                                <div className="w-full h-[180px] bg-gray-500">
+                                    {visual_files.extension == 'png' || visual_files.extension == 'jpg' || visual_files.extension == 'jpeg'
+                                        ?  <Image
+                                                alt="NextUI hero Image"
+                                                radius="none"
+                                                className="border bg-primary w-full rounded-t-lg"
+                                                src={`../../storage/images/${visual_files.file}`}
+                                            />
+                                        : <video
+                                            src={`../../storage/videos/${visual_files.file}`}
+                                            className="w-full rounded-t-lg"
+                                            preload="metadata"
+                                            muted
+                                        ></video>
+                                    }
+                                </div>
+                                <CardBody className="bg-primary z-50 border-t-2">
+                                    <div className="flex items-center justify-between h-[55px]">
                                         <h3 className="font-bold ml-3">
                                             {title}
                                         </h3>

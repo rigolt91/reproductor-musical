@@ -10,19 +10,20 @@ use Illuminate\Http\Request;
 class PlaylistsController extends Controller
 {
     protected $listFile;
-    protected $visualListFile;
-    protected $audioListFile;
 
-    public function __construct(ListFile $listFile, VisualListFile $visualListFile, AudioListFile $audioListFile)
+    public function __construct(ListFile $listFile)
     {
         $this->listFile = $listFile;
-        $this->visualListFile = $visualListFile;
-        $this->audioListFile = $audioListFile;
     }
 
     public function index(Request $request)
     {
-        return inertia('Playlists', ['listFiles' => $this->listFile->select('id', 'title', 'active')->search($request->search)->get()]);
+        return inertia('Playlists', [
+            'listFiles' => $this->listFile->with('visualFiles')
+                ->select('id', 'title', 'active')
+                ->search($request->search)
+                ->get()
+        ]);
     }
 
     public function store(Request $request)
@@ -38,8 +39,8 @@ class PlaylistsController extends Controller
 
         return inertia('Partials/Playlist/Playlist', [
             'listFile' => $listFile,
-            'visualListFile' => $this->visualListFile->where('list_file_id', $id)->with('visualFile')->get(),
-            'audioListFile' => $this->audioListFile->where('list_file_id', $id)->with('audioFile')->get()
+            'visualFiles' => $listFile->visualFiles()->get(),
+            'audioFiles' => $listFile->audioFiles()->get()
         ]);
     }
 

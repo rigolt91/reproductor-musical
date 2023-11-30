@@ -8,7 +8,7 @@ import { useForm } from "@inertiajs/react";
 import { Card, CardBody, CardHeader, Progress, Tooltip } from "@nextui-org/react";
 import { useRef } from "react";
 
-export default function CreateAudioFile({ listFile, audioListFile }) {
+export default function CreateAudioFile({ listFile, audioFiles }) {
     const titleInput = useRef();
 
     const {data, setData, post, delete: destroy, errors, progress, reset, processing} = useForm({
@@ -16,8 +16,6 @@ export default function CreateAudioFile({ listFile, audioListFile }) {
         title: '',
         file: '',
     });
-
-    console.log(audioListFile);
 
     function submit(e) {
         e.preventDefault();
@@ -67,11 +65,11 @@ export default function CreateAudioFile({ listFile, audioListFile }) {
 
                     <div className="w-full h-full border  rounded-lg ">
                         <ul className="grid w-full grid-cols-1 px-4 py-2 list-decimal 2xl:grid-cols-2">
-                            {audioListFile.map((audioFile) => (
+                            {audioFiles.map(({id, file}) => (
                                 <Li
-                                    key={audioFile.audio_file.id}
-                                    file={audioFile.audio_file.file}
-                                    handleClick={() => destroy(`/audio-file/${audioFile.id}`)}
+                                    key={id}
+                                    file={file}
+                                    handleClick={() => destroy(`/audio-file/${id}`)}
                                 />
                             ))}
                         </ul>
