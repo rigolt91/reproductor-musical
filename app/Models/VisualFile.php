@@ -11,8 +11,8 @@ class VisualFile extends Model
 
     protected $fillable = ['title', 'file', 'extension'];
 
-    public function visualListFile()
+    public function listFile()
     {
-        return $this->hasOne(VisualListFile::class);
+        return $this->belongsTo(ListFile::class);
     }
 }

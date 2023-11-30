@@ -9,10 +9,10 @@ class AudioFile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'file'];
+    protected $fillable = ['title', 'file', 'list_file_id'];
 
-    public function audioListFile()
+    public function listFile()
     {
-        return $this->hasOne(AudioListFile::class);
+        return $this->belongsTo(ListFile::class);
     }
 }

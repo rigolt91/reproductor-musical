@@ -10,19 +10,11 @@ use Illuminate\Support\Facades\Storage;
 
 class VisualFileController extends Controller
 {
-    protected $visualFile;
     protected $listFile;
-    protected $visualListFile;
 
-    public function __construct(
-        VisualFile $visualFile,
-        ListFile $listFile,
-        VisualListFile $visualListFile
-    )
+    public function __construct(ListFile $listFile)
     {
-        $this->visualFile = $visualFile;
         $this->listFile = $listFile;
-        $this->visualListFile = $visualListFile;
     }
 
     public function store(Request $request)
@@ -38,30 +30,22 @@ class VisualFileController extends Controller
 
         $this->isImage($extension) ? $file->storeAs('public/images', $name) : $file->storeAs('public/videos/', $name);
 
-        $visualFile = $this->visualFile->create([
+        $listFile = $this->listFile->find($request->listFileId);
+
+        $listFile->visualFiles()->create([
             'title' => $request->title,
             'file' => $name,
             'extension' => $extension
         ]);
 
-        $listFile = $this->listFile->find($request->listFileId);
-
-        $listFile->visualListFiles()->create(['visual_file_id' => $visualFile->id]);
-
         return to_route('playlists.edit', $request->listFileId);
     }
 
-    public function destroy($id)
+    public function destroy(VisualFile $visualFile)
     {
-        $visualListFile = $this->visualListFile->find($id);
+        $listFileId = $visualFile->list_file_id;
 
-        $listFileId = $visualListFile->list_file_id;
-
-        $visualListFile->delete();
-
-        $visualFile = $visualListFile->visualFile();
-
-        $this->destroyFile($visualFile->first());
+        $this->destroyFile($visualFile);
 
         $visualFile->delete();
 
@@ -73,13 +57,13 @@ class VisualFileController extends Controller
         $name = $visualFile->file;
         $extension = $visualFile->extension;
 
-        $this->isImage($extension) ? Storage::delete('public/images/'.$name) : Storage::delete('public/images/'.$name);
+        $this->isImage($extension) ? Storage::delete('public/images/'.$name) : Storage::delete('public/videos/'.$name);
     }
 
-    public function isImage($file)
+    public function isImage($extension)
     {
         $extensions = ['png', 'jpg', 'jpeg'];
 
-        return in_array($file, $extensions) ? true : false;
+        return in_array($extension, $extensions) ? true : false;
     }
 }

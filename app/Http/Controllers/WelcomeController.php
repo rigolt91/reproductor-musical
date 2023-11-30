@@ -18,14 +18,11 @@ class WelcomeController extends Controller
 
     public function index()
     {
-        $playlists = $this->listFile
-            ->with(['visualListFiles' => function($query) {
-                $query->with('visualFile');
-            }])
-            ->with(['audioListFiles' => function($query) {
-                $query->with('audioFile');
-            }])->active()->get();
+        $playlists = $this->listFile->active()->first();
 
-        return inertia('Welcome', ['playlists' => $playlists]);
+        return inertia('Welcome', [
+            'visualFiles' => $playlists->visualFiles()->select('id', 'file', 'extension')->get(),
+            'audioFiles' => $playlists->audioFiles()->select('id', 'file')->get()
+        ]);
     }
 }

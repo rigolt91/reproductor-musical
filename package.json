@@ -21,6 +21,8 @@
     },
     "dependencies": {
         "@nextui-org/react": "^2.2.9",
-        "framer-motion": "^10.16.5"
+        "framer-motion": "^10.16.5",
+        "react-audio-player": "^0.17.0",
+        "react-player": "^2.13.0"
     }
 }

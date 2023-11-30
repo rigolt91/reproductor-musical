@@ -8,7 +8,7 @@ import { useForm } from "@inertiajs/react";
 import { Card, CardBody, CardHeader, Image, Progress, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from "@nextui-org/react";
 import { useRef } from "react";
 
-export default function CreateVisualFile({ listFile, visualListFile }) {
+export default function CreateVisualFile({ listFile, visualFiles }) {
     const titleInput = useRef();
 
     const {data, setData, post, delete: destroy, errors, progress, reset, processing} = useForm({
@@ -77,14 +77,14 @@ export default function CreateVisualFile({ listFile, visualListFile }) {
 
                     <div className="w-full h-full border rounded-lg p-1">
                         <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4">
-                            {visualListFile.map((visualFile) => (
-                                <li key={visualFile.id} className="p-2 border rounded-lg bg-gray-50 hover:bg-gray-100 hover:shadow-lg">
+                            {visualFiles.map(({ id, title, file, extension }) => (
+                                <li key={id} className="p-2 border rounded-lg bg-gray-50 hover:bg-gray-100 hover:shadow-lg">
                                     <Li
-                                        key={visualFile.visual_file.id}
-                                        title={visualFile.visual_file.title}
-                                        file={visualFile.visual_file.file}
-                                        extension={visualFile.visual_file.extension}
-                                        handleClick={() => destroy(`/visual-file/${visualFile.id}`)}
+                                        key={id}
+                                        title={title}
+                                        file={file}
+                                        extension={extension}
+                                        handleClick={() => destroy(`/visual-file/${id}`)}
                                     />
                                 </li>
                             ))}
@@ -98,16 +98,23 @@ export default function CreateVisualFile({ listFile, visualListFile }) {
 
 const Li = ({ title, file, extension, handleClick }) => {
     return (
-        <div className="flex w-full">
-            {extension == 'png' || extension == 'jpg' || extension == 'jpeg'
-                ?  <Image
-                        alt="NextUI hero Image"
-                        radius="sm"
-                        className="border bg-primary w-32 h-16"
-                        src={`../../storage/images/${file}`}
-                    />
-                : ''
-            }
+        <div className="flex w-full items-center">
+            <div className="bg-gray-300 rounded-lg">
+                {extension == 'png' || extension == 'jpg' || extension == 'jpeg'
+                    ?  <Image
+                            alt="NextUI hero Image"
+                            radius="sm"
+                            className="border bg-primary w-32 h-16"
+                            src={`../../storage/images/${file}`}
+                        />
+                    : <video
+                        src={`../../storage/videos/${file}`}
+                        className="w-32 h-16 rounded-lg"
+                        preload="metadata"
+                        muted
+                    ></video>
+                }
+            </div>
 
             <div className="flex items-center justify-between w-full px-3">
                 <div className="text-gray-600">{title}</div>

@@ -1,12 +1,34 @@
 import { Link, Head } from '@inertiajs/react';
 import { Divider, Image } from '@nextui-org/react';
 import imgTarjeta from '../../../public/img/tarjeta.png';
+import ReactPlayer from 'react-player';
+import { useState } from 'react';
+import ReactAudioPlayer from 'react-audio-player';
 
-export default function Welcome({ auth, playlists }) {
+export default function Welcome({ auth, visualFiles, audioFiles }) {
+    const [itemVisualFile, setItemVisualFile] = useState(0);
+    const [itemAudioFile, setAudioVisualFile] = useState(0);
+
+    function playReactPlayer() {
+        if(visualFiles.length > 1 && itemVisualFile < visualFiles.length - 1) {
+            setItemVisualFile(itemVisualFile + 1);
+        } else {
+            setItemVisualFile(0);
+        }
+    }
+
+    function playReactAudioPlayer() {
+        if(audioFiles.length > 1 && itemAudioFile < audioFiles.length - 1) {
+            setAudioVisualFile(itemAudioFile + 1);
+        } else {
+            setAudioVisualFile(0);
+        }
+    }
+
     return (
         <>
             <Head title="Welcome" />
-            <div className="relative sm:flex sm:justify-center sm:items-center">
+            <div className="relative sm:flex sm:justify-center sm:items-center z-10">
                 <div className="sm:fixed sm:top-0 sm:right-0 p-6 text-end">
                     {auth.user ? (
                         <Link
@@ -27,11 +49,36 @@ export default function Welcome({ auth, playlists }) {
                     )}
                 </div>
             </div>
-            <div className="max-w-12xl p-0">
-                {console.log(playlists)}
+            <div className="max-w-12xl p-0 w-full flex items-center justify-center">
+                {
+                    visualFiles[itemVisualFile].extension == 'png' || visualFiles[itemVisualFile].extension == 'jpg' || visualFiles[itemVisualFile].extension == 'jpeg'
+                        ?  <Image
+                                alt="NextUI hero Image"
+                                radius="none"
+                                width="100%"
+                                height="100%"
+                                className="border bg-primary rounded-t-lg"
+                                src={`../../storage/images/${visualFiles[itemVisualFile].file}`}
+                            />
+                        : <ReactPlayer
+                            url={`../../storage/videos/${visualFiles[itemVisualFile].file}`}
+                            width="100%"
+                            height="100%"
+                            muted
+                            playing
+                            loop={visualFiles.length == 1 ? true : false}
+                            onEnded={playReactPlayer}
+                       />
+                }
+                <ReactAudioPlayer
+                    src={`../../storage/audios/${audioFiles[itemAudioFile].file}`}
+                    autoPlay
+                    loop={audioFiles.length == 1 ? true : false}
+                    onEnded={playReactAudioPlayer}
+                />
             </div>
-            <div className="max-w-12xl p-0">
-                <div className="h-[150px] w-full fixed flex bottom-0 rounded-b-md bg-[#027DA2]">
+            <div className="max-w-12xl p-0 z-50 relative">
+                <div className="h-[150px] w-full fixed flex bottom-0 rounded-b-md bg-[#027DA2]/50">
                     <div className="flex p-10 items-center justify-center w-[200px] lg:w-[336px]">
                         <Image
                             width={336}
