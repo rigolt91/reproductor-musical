@@ -33,6 +33,10 @@ export default {
                     danger: {
                         DEFAULT: "#b91c1c",
                         foreground: "#FFFFFF",
+                    },
+                    success: {
+                        DEFAULT: "#77C343",
+                        foreground: "#FFFFFF",
                     }
                 }
             }
