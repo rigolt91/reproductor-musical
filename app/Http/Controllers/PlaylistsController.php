@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AudioListFile;
 use App\Models\ListFile;
-use App\Models\VisualListFile;
 use Illuminate\Http\Request;
 
 class PlaylistsController extends Controller
