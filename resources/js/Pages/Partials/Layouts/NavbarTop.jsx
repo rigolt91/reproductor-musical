@@ -43,13 +43,13 @@ export default function NavbarTop({ user, header }) {
                                 key="profile"
                                 href={route('profile.edit')}
                             >
-                                Profile
+                                {Lang.get('strings.Profile')}
                             </DropdownItem>
                             <DropdownItem
                                 key="logout"
                                 onClick={() => post('logout')}
                             >
-                                Logout
+                                {Lang.get('strings.Logout')}
                             </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
@@ -80,8 +80,8 @@ export default function NavbarTop({ user, header }) {
                 </button>
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden bg-white absolute top-0 right-[45px] rounded-md shadow-lg'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Home
+                        <ResponsiveNavLink href={route('playlists.index')} active={route().current('dashboard')}>
+                            {Lang.get('strings.Home')}
                         </ResponsiveNavLink>
                     </div>
 
@@ -92,9 +92,9 @@ export default function NavbarTop({ user, header }) {
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('profile.edit')}>{Lang.get('strings.Profile')}</ResponsiveNavLink>
                             <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                                Log Out
+                                {Lang.get('strings.Log Out')}
                             </ResponsiveNavLink>
                         </div>
                     </div>

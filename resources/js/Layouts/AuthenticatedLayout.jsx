@@ -78,9 +78,9 @@ export default function Authenticated({ user, header, children }) {
                                     </NavLink>
                                 </div>
                                 <div className="mt-2.5">
-                                    <NavLink onClick={onOpen} className="px-2 py-2 rounded-md shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20">
+                                    <Button isIconOnly onClick={onOpen} className="px-2 py-2 rounded-md shadow-sm hover:shadow-lg hover:bg-white/20 bg-gray-100/20">
                                         <PlusIcon color="white" />
-                                    </NavLink>
+                                    </Button>
                                 </div>
                             </div>
                         </div>

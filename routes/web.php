@@ -23,8 +23,6 @@ use Inertia\Inertia;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
-Route::get('/dashboard', [PlaylistsController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::resource('/playlists', PlaylistsController::class)
     ->only('index', 'store', 'create', 'edit', 'show', 'destroy')
     ->middleware(['auth', 'verified']);
@@ -36,8 +34,6 @@ Route::resource('/visual-file', VisualFileController::class)
 Route::resource('/audio-file', AudioFileController::class)
     ->only('store', 'destroy')
     ->middleware(['auth', 'verified']);
-
-Route::get('/file-library', [FileLibraryController::class, 'index'])->middleware(['auth', 'verified'])->name('file-library');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

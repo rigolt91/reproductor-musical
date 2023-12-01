@@ -8,9 +8,9 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Profile</h2>}
+            header={<h2 className="font-semibold text-base text-white leading-tight">{Lang.get('strings.Profile')}</h2>}
         >
-            <Head title="Profile" />
+            <Head title={Lang.get('strings.Profile')} />
 
             <div className="py-6">
                 <div className="max-w-12xl mx-auto px-6 sm:px-6 lg:px-6 space-y-6">
