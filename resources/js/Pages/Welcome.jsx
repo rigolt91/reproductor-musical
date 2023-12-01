@@ -27,7 +27,7 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
 
     return (
         <>
-            <Head title="Welcome" />
+            <Head title="Laboratorio de análisis clínicos" />
             <div className="relative sm:flex sm:justify-center sm:items-center z-10">
                 <div className="sm:fixed sm:top-0 sm:right-0 p-6 text-end">
                     {auth.user ? (
@@ -50,35 +50,47 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
                 </div>
             </div>
             <div className="max-w-12xl p-0 w-full flex items-center justify-center">
-                {
-                    visualFiles[itemVisualFile].extension == 'png' || visualFiles[itemVisualFile].extension == 'jpg' || visualFiles[itemVisualFile].extension == 'jpeg'
-                        ?  <Image
-                                alt="NextUI hero Image"
-                                radius="none"
+                {visualFiles.length > 0 && audioFiles.length > 0
+                    ? (<>
+                        {visualFiles[itemVisualFile].extension == 'png' || visualFiles[itemVisualFile].extension == 'jpg' || visualFiles[itemVisualFile].extension == 'jpeg'
+                            ?  (<>
+                                    <Image
+                                        alt="NextUI hero Image"
+                                        radius="none"
+                                        width="100%"
+                                        height="100%"
+                                        className="border bg-primary rounded-t-lg"
+                                        src={`../../storage/images/${visualFiles[itemVisualFile].file}`}
+                                    />
+                                    {visualFiles.length > 1 &&
+                                        setTimeout(() => {
+                                            playReactPlayer();
+                                        }, 60000)
+                                    }
+                                </>)
+                            : (<ReactPlayer
+                                url={`../../storage/videos/${visualFiles[itemVisualFile].file}`}
                                 width="100%"
                                 height="100%"
-                                className="border bg-primary rounded-t-lg"
-                                src={`../../storage/images/${visualFiles[itemVisualFile].file}`}
-                            />
-                        : <ReactPlayer
-                            url={`../../storage/videos/${visualFiles[itemVisualFile].file}`}
-                            width="100%"
-                            height="100%"
-                            muted
-                            playing
-                            loop={visualFiles.length == 1 ? true : false}
-                            onEnded={playReactPlayer}
-                       />
+                                muted
+                                controls
+                                playing
+                                loop={visualFiles.length == 1 ? true : false}
+                                onEnded={playReactPlayer}
+                            />)
+                        }
+                        <ReactAudioPlayer
+                            src={`../../storage/audios/${audioFiles[itemAudioFile].file}`}
+                            autoPlay
+                            loop={audioFiles.length == 1 ? true : false}
+                            onEnded={playReactAudioPlayer}
+                        />
+                      </>)
+                    : ('')
                 }
-                <ReactAudioPlayer
-                    src={`../../storage/audios/${audioFiles[itemAudioFile].file}`}
-                    autoPlay
-                    loop={audioFiles.length == 1 ? true : false}
-                    onEnded={playReactAudioPlayer}
-                />
             </div>
             <div className="max-w-12xl p-0 z-50 relative">
-                <div className="h-[150px] w-full fixed flex bottom-0 rounded-b-md bg-[#027DA2]/50">
+                <div className="h-[150px] w-full fixed flex bottom-0 rounded-b-md bg-primary/50">
                     <div className="flex p-10 items-center justify-center w-[200px] lg:w-[336px]">
                         <Image
                             width={336}
@@ -88,7 +100,7 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
                             className="mx-4 lg:mx-16"
                         />
                     </div>
-                    <Divider orientation="vertical" className="bg-[#77C343] mx-4 lg:mx-28 px-0.5 lg:px-1 h-[230px]" />
+                    <Divider orientation="vertical" className="bg-success mx-4 lg:mx-28 px-0.5 lg:px-1 h-[230px]" />
                     <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-x-10">
                         <div className="flex items-center">
                             <div className="mt-2">

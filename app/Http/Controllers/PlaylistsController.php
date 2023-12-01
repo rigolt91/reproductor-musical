@@ -44,9 +44,21 @@ class PlaylistsController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy(VisualFileController $visualFileController, AudioFileController $audioFileController, $id)
     {
-        $this->listFile->find($id)->delete();
+        $listFile = $this->listFile->find($id);
+
+        foreach($listFile->visualFiles()->get() as $visualFile)
+        {
+            $visualFileController->destroy($visualFile);
+        }
+
+        foreach($listFile->audioFiles()->get() as $audioFile)
+        {
+            $audioFileController->destroy($audioFile);
+        }
+
+        $listFile->delete();
 
         return to_route('playlists.index');
     }

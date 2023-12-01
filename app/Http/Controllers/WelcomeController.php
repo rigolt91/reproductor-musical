@@ -2,27 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AudioFile;
 use App\Models\ListFile;
-use Illuminate\Http\Request;
+use App\Models\VisualFile;
 
 class WelcomeController extends Controller
 {
     protected $listFile;
+    protected $visualFile;
+    protected $audioFile;
 
     public function __construct(
-        ListFile $listFile
-
+        ListFile $listFile,
+        VisualFile $visualFile,
+        AudioFile $audioFile
     ) {
         $this->listFile = $listFile;
+        $this->visualFile = $visualFile;
+        $this->audioFile = $audioFile;
     }
 
     public function index()
     {
         $playlists = $this->listFile->active()->first();
 
+        $visualFile = [];
+        $audioFile = [];
+
+        if($playlists) {
+            $visualFile = $this->visualFile->whereListFile($playlists->id)->select('id', 'file', 'extension')->get();
+            $audioFile = $this->audioFile->whereListFile($playlists->id)->select('id', 'file')->get();
+        }
+
         return inertia('Welcome', [
-            'visualFiles' => $playlists->visualFiles()->select('id', 'file', 'extension')->get(),
-            'audioFiles' => $playlists->audioFiles()->select('id', 'file')->get()
+            'visualFiles' => $visualFile,
+            'audioFiles' => $audioFile
         ]);
     }
 }
