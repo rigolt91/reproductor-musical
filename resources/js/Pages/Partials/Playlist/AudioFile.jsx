@@ -3,7 +3,6 @@ import FileInput from "@/Components/FileInput";
 import DeleteIcon from "@/Components/Icons/DeleteIcon";
 import SoundIcon from "@/Components/Icons/SoundIcon";
 import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
 import { Card, CardBody, CardHeader, Progress, Tooltip } from "@nextui-org/react";
 import { useRef } from "react";

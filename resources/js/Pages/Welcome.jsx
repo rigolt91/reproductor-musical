@@ -1,6 +1,7 @@
 import { Link, Head } from '@inertiajs/react';
 import { Divider, Image } from '@nextui-org/react';
 import imgTarjeta from '../../../public/img/tarjeta.png';
+import logo from '../../../public/img/sm_logo.png';
 import ReactPlayer from 'react-player';
 import { useState } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
@@ -8,6 +9,7 @@ import ReactAudioPlayer from 'react-audio-player';
 export default function Welcome({ auth, visualFiles, audioFiles }) {
     const [itemVisualFile, setItemVisualFile] = useState(0);
     const [itemAudioFile, setAudioVisualFile] = useState(0);
+    const mimes = ['jpg', 'png', 'jpeg'];
 
     function playReactPlayer() {
         if(visualFiles.length > 1 && itemVisualFile < visualFiles.length - 1) {
@@ -41,7 +43,7 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
                         <>
                             <Link
                                 href={route('login')}
-                                className="font-semibold bg-[#027DA2] p-2 text-white hover:bg-[#027DA2]/80 rounded-md shadow hover:shadow-lg"
+                                className="ont-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                             >
                                 {Lang.get('strings.Log in')}
                             </Link>
@@ -50,12 +52,12 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
                 </div>
             </div>
             <div className="max-w-12xl p-0 w-full flex items-center justify-center">
-                {visualFiles.length > 0 && audioFiles.length > 0
+                {(visualFiles.length > 0 && audioFiles.length > 0)
                     ? (<>
-                        {visualFiles[itemVisualFile].extension == 'png' || visualFiles[itemVisualFile].extension == 'jpg' || visualFiles[itemVisualFile].extension == 'jpeg'
+                        {mimes.includes(visualFiles[itemVisualFile].extension)
                             ?  (<>
                                     <Image
-                                        alt="NextUI hero Image"
+                                        alt={visualFiles.title}
                                         radius="none"
                                         width="100%"
                                         height="100%"
@@ -73,7 +75,6 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
                                 width="100%"
                                 height="100%"
                                 muted
-                                controls
                                 playing
                                 loop={visualFiles.length == 1 ? true : false}
                                 onEnded={playReactPlayer}
@@ -86,7 +87,23 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
                             onEnded={playReactAudioPlayer}
                         />
                       </>)
-                    : ('')
+                    : (<div className="text-gray-600 flex items-center justify-items-center min-h-screen">
+                        <div className="flex-row justify-items-center -mt-12">
+                            <div className="flex items-center justify-center">
+                                <Image
+                                    width={149}
+                                    height={53}
+                                    alt="Laboratorio de análisis clínicos y bacterianos"
+                                    src={logo}
+                                    className="bg-primary"
+                                />
+                                <div className="flex-row items-center w-full sm:w-[335px] -mt-4 sm:-mt-8">
+                                    <p className="text-[50px] sm:text-[100px] font-bold">BC Lab</p>
+                                    <p className="text-lg uppercase -mt-5 sm:-mt-10 ml-1 sm:ml-1.5 font-bold">Laboratorio de análisis clínicos y bacterianos</p>
+                                </div>
+                            </div>
+                        </div>
+                      </div>)
                 }
             </div>
             <div className="max-w-12xl p-0 z-50 relative">

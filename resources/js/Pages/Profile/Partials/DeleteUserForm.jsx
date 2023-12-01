@@ -79,13 +79,13 @@ export default function DeleteUserForm({ className = '' }) {
                             isFocused
                         />
 
-                        <InputError message={Lang.get('strings.'+errors.password)} className="mt-2" />
+                        <InputError message={errors.password} className="mt-2" />
                     </div>
 
                     <div className="mt-6 flex justify-end">
                         <SecondaryButton onClick={closeModal}>{Lang.get('strings.Cancel')}</SecondaryButton>
 
-                        <DangerButton className="ms-3" disabled={processing}>
+                        <DangerButton type="submit" className="ms-3" disabled={processing}>
                             {Lang.get('strings.Delete Account')}
                         </DangerButton>
                     </div>
