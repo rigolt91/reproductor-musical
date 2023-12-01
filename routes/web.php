@@ -1,14 +1,11 @@
 <?php
 
 use App\Http\Controllers\AudioFileController;
-use App\Http\Controllers\FileLibraryController;
 use App\Http\Controllers\PlaylistsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VisualFileController;
 use App\Http\Controllers\WelcomeController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
