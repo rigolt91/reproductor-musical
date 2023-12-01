@@ -93,13 +93,13 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
                                 <Image
                                     width={149}
                                     height={53}
-                                    alt="Laboratorio de análisis clínicos y bacterianos"
+                                    alt="Laboratorio de análisis clínicos y bacteriológicos"
                                     src={logo}
                                     className="bg-primary"
                                 />
                                 <div className="flex-row items-center w-full sm:w-[335px] -mt-4 sm:-mt-8">
                                     <p className="text-[50px] sm:text-[100px] font-bold">BC Lab</p>
-                                    <p className="text-lg uppercase -mt-5 sm:-mt-10 ml-1 sm:ml-1.5 font-bold">Laboratorio de análisis clínicos y bacterianos</p>
+                                    <p className="text-lg uppercase -mt-5 sm:-mt-10 ml-1 sm:ml-1.5 font-bold">Laboratorio de análisis clínicos y bacteriológicos</p>
                                 </div>
                             </div>
                         </div>
