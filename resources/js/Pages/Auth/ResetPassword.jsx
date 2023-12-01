@@ -28,7 +28,7 @@ export default function ResetPassword({ token, email }) {
 
     return (
         <GuestLayout>
-            <Head title="Reset Password" />
+            <Head title={Lang.get('strings.Reset Password')} />
 
             <form onSubmit={submit}>
                 <div className="mt-4">
@@ -73,7 +73,7 @@ export default function ResetPassword({ token, email }) {
 
                 <div className="flex items-center justify-end mt-4">
                     <PrimaryButton className="ms-4" isDisabled={processing}>
-                        Reset Password
+                        {Lang.get('strings.Reset Password')}
                     </PrimaryButton>
                 </div>
             </form>

@@ -28,7 +28,7 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <Head title="Register" />
+            <Head title={Lang.get("strings.Register")} />
 
             <form onSubmit={submit}>
                 <div className="mt-4">
@@ -92,11 +92,11 @@ export default function Register() {
                         href={route('login')}
                         className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                        Already registered?
+                        {Lang.get('strings.Already registered?')}
                     </Link>
 
                     <PrimaryButton className="ms-4" isDisabled={processing}>
-                        Register
+                        {Lang.get('strings.Register')}
                     </PrimaryButton>
                 </div>
             </form>
