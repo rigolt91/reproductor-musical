@@ -8,7 +8,7 @@ export default function NavbarTop({ user, header }) {
     const {post} = useForm();
 
     return (
-        <Navbar className="shadow-md rounded-lg bg-primary flex justify-between mt-1" maxWidth="full">
+        <Navbar className="flex justify-between mt-1 rounded-lg shadow-md bg-primary" maxWidth="full">
             {header &&
                 <div>
                     {header}
@@ -55,12 +55,12 @@ export default function NavbarTop({ user, header }) {
                 </div>
             </div>
 
-            <div className="-me-2 flex items-center sm:hidden relative">
+            <div className="relative flex items-center -me-2 sm:hidden">
                 <button
                     onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                    className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                    className="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500"
                 >
-                    <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path
                             className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
                             strokeLinecap="round"
@@ -86,8 +86,8 @@ export default function NavbarTop({ user, header }) {
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
+                            <div className="text-base font-medium text-gray-800">{user.name}</div>
+                            <div className="text-sm font-medium text-gray-500">{user.email}</div>
                         </div>
 
                         <div className="mt-3 space-y-1">
