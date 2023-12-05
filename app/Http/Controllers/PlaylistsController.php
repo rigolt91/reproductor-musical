@@ -71,6 +71,8 @@ class PlaylistsController extends Controller
             $this->listFile->where('active', 1)->update(['active' => false]);
 
             $listFile->update(['active' => true]);
+
+            return to_route('home');
         }
 
         return to_route('playlists.index');

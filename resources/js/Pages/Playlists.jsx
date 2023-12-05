@@ -15,6 +15,18 @@ export default function Playlists({ auth, listFiles }) {
     const {get, delete: destroy, processing} = useForm();
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
+    function playAndStop(id) {
+        get(`playlists/${id}`, {
+            onSuccess: () => fullScreen(),
+        });
+    }
+
+    function fullScreen() {
+        if(!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        }
+    }
+
     return(
         <AuthenticatedLayout
             user={auth.user}
@@ -61,7 +73,7 @@ export default function Playlists({ auth, listFiles }) {
                                                 <span className="text-lg cursor-pointer text-default-400 active:opacity-50">
                                                     <DefaultButton
                                                         isIconOnly
-                                                        onPress={() => get(`playlists/${id}`)}
+                                                        onPress={() => playAndStop(id)}
                                                         color={active ? 'success' : 'default'}
                                                         disabled={processing}
                                                         className="hover:scale-125 transition duration-200"
