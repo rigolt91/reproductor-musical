@@ -30,7 +30,7 @@ export default function Authenticated({ user, header, children }) {
                     <div className="top-0 flex-row justify-between w-full">
                         <div className="flex-row items-center w-full">
                             <div className="flex items-center shrink-0">
-                                <Link href="/">
+                                <Link href="/" target="_blank">
                                     <ApplicationLogo className="hidden w-auto text-gray-800 fill-current lg:block h-9" />
                                     <ApplicationLogoSm className="block w-auto text-gray-800 fill-current lg:hidden h-9" />
                                 </Link>
