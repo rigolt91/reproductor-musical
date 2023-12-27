@@ -16,15 +16,7 @@ export default function Playlists({ auth, listFiles }) {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     function playAndStop(id) {
-        get(`playlists/${id}`, {
-            onSuccess: () => fullScreen(),
-        });
-    }
-
-    function fullScreen() {
-        if(!document.fullscreenElement) {
-            document.documentElement.requestFullscreen();
-        }
+        get(`playlists/${id}`);
     }
 
     return(

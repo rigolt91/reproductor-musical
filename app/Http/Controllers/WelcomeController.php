@@ -31,7 +31,7 @@ class WelcomeController extends Controller
 
         if($playlists) {
             $visualFile = $this->visualFile->whereListFile($playlists->id)->select('id', 'file', 'extension')->get();
-            $audioFile = $this->audioFile->whereListFile($playlists->id)->select('id', 'file')->get();
+            $audioFile = $this->audioFile->whereListFile($playlists->id)->select('id', 'file')->inRandomOrder()->get();
         }
 
         return inertia('Welcome', [

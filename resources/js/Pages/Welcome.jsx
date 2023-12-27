@@ -3,13 +3,19 @@ import { Divider, Image } from '@nextui-org/react';
 import imgTarjeta from '../../../public/img/tarjeta.png';
 import logo from '../../../public/img/sm_logo.png';
 import ReactPlayer from 'react-player';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 
 export default function Welcome({ auth, visualFiles, audioFiles }) {
     const [itemVisualFile, setItemVisualFile] = useState(0);
     const [itemAudioFile, setAudioVisualFile] = useState(0);
     const mimes = ['jpg', 'png', 'jpeg'];
+
+    const audioPlayer = useRef();
+
+    function audioPlay(){
+        audioPlayer.current.audioEl.current.play();
+    }
 
     function playReactPlayer() {
         if(visualFiles.length > 1 && itemVisualFile < visualFiles.length - 1) {
@@ -27,8 +33,17 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
         }
     }
 
+    function fullScreen() {
+        audioPlay();
+        if(!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        }else{
+            document.exitFullscreen();
+        }
+    }
+
     return (
-        <>
+        <div onDoubleClick={fullScreen}>
             <Head title="Laboratorio de análisis clínicos" />
             <div className="relative z-10 sm:flex sm:justify-center sm:items-center">
                 <div className="p-6 sm:fixed sm:top-0 sm:right-0 text-end">
@@ -82,9 +97,11 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
                         }
                         <ReactAudioPlayer
                             src={`../../storage/audios/${audioFiles[itemAudioFile].file}`}
-                            autoPlay
+                            preload="auto"
+                            autoPlay={true}
                             loop={audioFiles.length == 1 ? true : false}
                             onEnded={playReactAudioPlayer}
+                            ref={audioPlayer}
                         />
                       </>)
                     : (<div className="flex items-center min-h-screen text-gray-600 justify-items-center">
@@ -163,6 +180,6 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

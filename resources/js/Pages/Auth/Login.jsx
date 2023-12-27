@@ -79,7 +79,7 @@ export default function Login({ status, canResetPassword }) {
                         </Link>
                     )}
 
-                    <PrimaryButton className="ms-4" isDisabled={processing}>
+                    <PrimaryButton className="ms-4" isLoading={processing}>
                         {Lang.get('strings.Log in')}
                     </PrimaryButton>
                 </div>
