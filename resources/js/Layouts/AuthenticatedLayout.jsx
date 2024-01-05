@@ -1,6 +1,6 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
-import { useForm } from '@inertiajs/react';
-import { Button, Divider, Link, Navbar, ScrollShadow, useDisclosure } from '@nextui-org/react';
+import { Link, useForm } from '@inertiajs/react';
+import { Button, Divider, Navbar, ScrollShadow, useDisclosure } from '@nextui-org/react';
 import TextInput from '@/Components/TextInput';
 import ApplicationLogoSm from '@/Components/ApplicationLogoSm';
 import NavbarTop from '@/Pages/Partials/Layouts/NavBarTop';

@@ -17,6 +17,11 @@ class ListFile extends Model
         return $this->hasOne(AudioFile::class);
     }
 
+    public function audioFilesSpotify()
+    {
+        return $this->hasOne(AudioFileSpotify::class);
+    }
+
     public function visualFiles()
     {
         return $this->hasOne(VisualFile::class);
