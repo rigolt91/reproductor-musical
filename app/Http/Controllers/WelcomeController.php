@@ -11,6 +11,7 @@ class WelcomeController extends Controller
     protected $listFile;
     protected $visualFile;
     protected $audioFile;
+    protected $audioFileSpotify;
 
     public function __construct(
         ListFile $listFile,

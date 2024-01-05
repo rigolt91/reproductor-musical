@@ -2,6 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from "@inertiajs/react";
 import VisualFile from './VisualFile';
 import AudioFile from './AudioFile';
+import CreateAudioFileSpotify from './AudioFileSpotify';
 
 export default function Playlist({ auth, listFile, visualFiles, audioFiles }) {
     return(
@@ -21,6 +22,7 @@ export default function Playlist({ auth, listFile, visualFiles, audioFiles }) {
                     <div className="grid grid-cols-1 gap-4">
                         <VisualFile listFile={listFile.id} visualFiles={visualFiles} />
                         <AudioFile listFile={listFile.id} audioFiles={audioFiles} />
+                        <CreateAudioFileSpotify listFile={listFile.id} audioFiles={audioFiles} />
                     </div>
                 </div>
             </div>

@@ -28,7 +28,7 @@ export default function CreateVisualFile({ listFile, visualFiles }) {
     return (
         <Card radius="sm" shadow="sm" className="w-full">
             <CardHeader className="border-b bg-primary">
-                <h3 className="font-bold text-white text-md">Archivos Visuales</h3>
+                <h3 className="font-bold text-white text-md">Añadir archivos visuales</h3>
             </CardHeader>
             <CardBody>
                 <div className="flex-row gap-4 lg:flex lg:grid-cols-2">

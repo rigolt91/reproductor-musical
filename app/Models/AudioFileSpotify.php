@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AudioFile extends Model
+class AudioFileSpotify extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['file', 'list_file_id'];
+    protected $fillable = ['url', 'list_file_id'];
 
     public function listFile()
     {

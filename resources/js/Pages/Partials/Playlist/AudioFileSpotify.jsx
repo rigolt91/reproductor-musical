@@ -1,13 +1,11 @@
 import DefaultButton from "@/Components/DefaultButton";
-import FileInput from "@/Components/FileInput";
 import DeleteIcon from "@/Components/Icons/DeleteIcon";
-import SoundIcon from "@/Components/Icons/SoundIcon";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm } from "@inertiajs/react";
 import { Card, CardBody, CardHeader, Progress, Tooltip } from "@nextui-org/react";
 import { useRef } from "react";
 
-export default function CreateAudioFile({ listFile, audioFiles }) {
+export default function CreateAudioFileSpotify({ listFile, audioFiles }) {
     const titleInput = useRef();
 
     const {data, setData, post, delete: destroy, errors, progress, reset, processing} = useForm({
@@ -18,7 +16,7 @@ export default function CreateAudioFile({ listFile, audioFiles }) {
 
     function submit(e) {
         e.preventDefault();
-        post('/audio-file', {
+        post('/audio-file-spotify', {
             onSuccess: () => reset(),
             preserveScroll: true,
         });
@@ -27,30 +25,12 @@ export default function CreateAudioFile({ listFile, audioFiles }) {
     return (
         <Card radius="sm" shadow="sm" className="w-full">
             <CardHeader className="border-b bg-primary">
-                <h3 className="font-bold text-white text-md">Añadir audios locales</h3>
+                <h3 className="font-bold text-white text-md">Añadir audios desde spotify</h3>
             </CardHeader>
             <CardBody>
                 <div className="flex-row gap-4 lg:flex lg:grid-cols-2">
                     <div className="w-full lg:w-[600px] -mt-2">
                         <form onSubmit={submit}>
-                            <div className="mb-2">
-                                <FileInput
-                                    name="audio_file"
-                                    label="Subir archivo"
-                                    description="MP3, WAV hasta 250MB"
-                                    value={data.file}
-                                    onChange={e => setData('file', e.target.files[0])}
-                                    className="file:border-0"
-                                    icon={
-                                        <SoundIcon color="#9ca3af" width="34" height="48" />
-                                    }
-                                    file={data.file && data.file}
-                                    errorMessage={errors.file}
-                                />
-                                {progress && (
-                                    <Progress aria-label="Loading..." value={progress.percentage} className="max-w-md"/>
-                                )}
-                            </div>
                             <div className="flex justify-end mt-2 mb-4 space-x-3 lg:mb-0">
                                 <DefaultButton type="button" onPress={() => reset()}>
                                     Cancelar
