@@ -5,7 +5,7 @@ import FileIcon from "@/Components/Icons/FileIcon";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
-import { Card, CardBody, CardHeader, Image, Progress, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Divider, Image, Progress, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from "@nextui-org/react";
 import { useRef } from "react";
 
 export default function CreateVisualFile({ listFile, visualFiles }) {
@@ -26,11 +26,15 @@ export default function CreateVisualFile({ listFile, visualFiles }) {
     }
 
     return (
-        <Card radius="sm" shadow="sm" className="w-full">
-            <CardHeader className="border-b bg-primary">
-                <h3 className="font-bold text-white text-md">Añadir archivos visuales</h3>
+        <Card radius="sm" shadow="sm" className="w-full px-1">
+            <CardHeader className="py-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-film" viewBox="0 0 16 16">
+                    <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm4 0v6h8V1zm8 8H4v6h8zM1 1v2h2V1zm2 3H1v2h2zM1 7v2h2V7zm2 3H1v2h2zm-2 3v2h2v-2zM15 1h-2v2h2zm-2 3v2h2V4zm2 3h-2v2h2zm-2 3v2h2v-2zm2 3h-2v2h2z"/>
+                </svg>
+                <h3 className="font-bold text-base ml-3">Añadir archivos visuales</h3>
             </CardHeader>
             <CardBody>
+                <Divider className="-mt-3 mb-2 bg-gray-200" />
                 <div className="flex-row gap-4 lg:flex lg:grid-cols-2">
                     <div className="w-full lg:w-[600px]">
                         <form onSubmit={submit}>

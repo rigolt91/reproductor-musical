@@ -14,7 +14,7 @@ export default function Welcome({ auth, visualFiles, audioFiles, audioFilesSpoti
     const audioPlayer = useRef();
 
     window.onSpotifyIframeApiReady = (IFrameAPI) => {
-        if(audioFiles.length == 0 && audioFilesSpotify) {
+        if(audioFiles.length == 0) {
             let element = document.getElementById('spotifyIframe');
             let options = {
                 uri: `spotify:${audioFilesSpotify.type}:${audioFilesSpotify.file}`
@@ -89,68 +89,68 @@ export default function Welcome({ auth, visualFiles, audioFiles, audioFilesSpoti
                     )}
                 </div>
             </div>
-            <div className="relative flex items-center justify-center w-full p-0 max-w-12xl">
-                {(visualFiles.length > 0)
-                    ? (<>
-                        {mimes.includes(visualFiles[itemVisualFile].extension)
-                            ?  (<>
-                                    <Image
-                                        alt={visualFiles.title}
-                                        radius="none"
-                                        width="100%"
-                                        height="100%"
-                                        className="border rounded-t-lg bg-primary"
-                                        src={`../../storage/images/${visualFiles[itemVisualFile].file}`}
-                                    />
-                                    {visualFiles.length > 1 &&
-                                        setTimeout(() => {
-                                            playReactPlayer();
-                                        }, 60000)
-                                    }
-                                </>)
-                            : (<ReactPlayer
-                                url={`../../storage/videos/${visualFiles[itemVisualFile].file}`}
-                                width="100%"
-                                height="100%"
-                                muted
-                                playing
-                                loop={visualFiles.length == 1 ? true : false}
-                                onEnded={playReactPlayer}
-                                className="z-50"
-                            />)
-                        }
-                        {audioFiles.length > 0
-                            ?   (<ReactAudioPlayer
-                                    src={`../../storage/audios/${audioFiles[itemAudioFile].file}`}
-                                    preload="auto"
-                                    autoPlay={true}
-                                    loop={audioFiles.length == 1 ? true : false}
-                                    onEnded={playReactAudioPlayer}
-                                    ref={audioPlayer}
+            <div className="relative flex items-center justify-center">
+                <div className="flex items-center justify-center w-full p-0 max-w-12xl bg-white z-50">
+                    {(visualFiles.length > 0)
+                        ? (<>
+                            {mimes.includes(visualFiles[itemVisualFile].extension)
+                                ?  (<>
+                                        <Image
+                                            alt={visualFiles.title}
+                                            radius="none"
+                                            width="100%"
+                                            height="100%"
+                                            className="border rounded-t-lg bg-primary"
+                                            src={`../../storage/images/${visualFiles[itemVisualFile].file}`}
+                                        />
+                                        {visualFiles.length > 1 &&
+                                            setTimeout(() => {
+                                                playReactPlayer();
+                                            }, 60000)
+                                        }
+                                    </>)
+                                : (<ReactPlayer
+                                    url={`../../storage/videos/${visualFiles[itemVisualFile].file}`}
+                                    width="100%"
+                                    height="100%"
+                                    muted
+                                    playing
+                                    loop={visualFiles.length == 1 ? true : false}
+                                    onEnded={playReactPlayer}
+                                    className="z-50"
                                 />)
-                            :   (
-                                    <div id="spotifyIframe"></div>
-                                )
-                        }
-                      </>)
-                    : (<div className="flex items-center min-h-screen text-gray-600 justify-items-center">
-                        <div className="flex-row -mt-12 justify-items-center">
-                            <div className="flex items-center justify-center">
-                                <Image
-                                    width={149}
-                                    height={53}
-                                    alt="Laboratorio de análisis clínicos y bacteriológicos"
-                                    src={logo}
-                                    className="bg-primary"
-                                />
-                                <div className="flex-row items-center w-full sm:w-[335px] -mt-4 sm:-mt-8">
-                                    <p className="text-[50px] sm:text-[100px] font-bold">BC Lab</p>
-                                    <p className="text-lg uppercase -mt-5 sm:-mt-10 ml-1 sm:ml-1.5 font-bold">Laboratorio de análisis clínicos y bacteriológicos</p>
+                            }
+                            {audioFiles.length > 0
+                                &&   (<ReactAudioPlayer
+                                        src={`../../storage/audios/${audioFiles[itemAudioFile].file}`}
+                                        preload="auto"
+                                        autoPlay={true}
+                                        loop={audioFiles.length == 1 ? true : false}
+                                        onEnded={playReactAudioPlayer}
+                                        ref={audioPlayer}
+                                    />)
+                            }
+                        </>)
+                        : (<div className="flex items-center min-h-screen text-gray-600 justify-items-center z-50">
+                            <div className="flex-row -mt-12 justify-items-center">
+                                <div className="flex items-center justify-center">
+                                    <Image
+                                        width={149}
+                                        height={53}
+                                        alt="Laboratorio de análisis clínicos y bacteriológicos"
+                                        src={logo}
+                                        className="bg-primary z-50"
+                                    />
+                                    <div className="flex-row items-center w-full sm:w-[335px] -mt-4 sm:-mt-8">
+                                        <p className="text-[50px] sm:text-[100px] font-bold">BC Lab</p>
+                                        <p className="text-lg uppercase -mt-5 sm:-mt-10 ml-1 sm:ml-1.5 font-bold">Laboratorio de análisis clínicos y bacteriológicos</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                      </div>)
-                }
+                        </div>)
+                    }
+                </div>
+                <div id="spotifyIframe" className='z-10'></div>
             </div>
             <div className="relative z-50 p-0 max-w-12xl">
                 <div className="h-[100px] w-full px-4 fixed flex bottom-0 rounded-b-md bg-primary/50">
