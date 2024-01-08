@@ -38,7 +38,8 @@ class PlaylistsController extends Controller
         return inertia('Partials/Playlist/Playlist', [
             'listFile' => $listFile,
             'visualFiles' => $listFile->visualFiles()->get(),
-            'audioFiles' => $listFile->audioFiles()->get()
+            'audioFiles' => $listFile->audioFiles()->get(),
+            'audioFilesSpotify' => $listFile->audioFilesSpotify()->get()
         ]);
     }
 

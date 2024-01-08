@@ -10,7 +10,7 @@ class AudioFileSpotify extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['url', 'list_file_id'];
+    protected $fillable = ['type', 'file', 'list_file_id'];
 
     public function listFile()
     {

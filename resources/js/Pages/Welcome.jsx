@@ -6,12 +6,33 @@ import ReactPlayer from 'react-player';
 import { useRef, useState } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 
-export default function Welcome({ auth, visualFiles, audioFiles }) {
+export default function Welcome({ auth, visualFiles, audioFiles, audioFilesSpotify }) {
     const [itemVisualFile, setItemVisualFile] = useState(0);
     const [itemAudioFile, setAudioVisualFile] = useState(0);
+    const [playAudioSpotify, setPlayAudioSpotify] = useState(0);
     const mimes = ['jpg', 'png', 'jpeg'];
-
     const audioPlayer = useRef();
+
+    window.onSpotifyIframeApiReady = (IFrameAPI) => {
+        if(audioFiles.length == 0 && audioFilesSpotify) {
+            let element = document.getElementById('spotifyIframe');
+            let options = {
+                uri: `spotify:${audioFilesSpotify.type}:${audioFilesSpotify.file}`
+            };
+            let callback = (EmbedController) => {
+                EmbedController.addListener('ready', () => {
+                    document.getElementById('fullScreen').addEventListener('dblclick', () => {
+                        EmbedController.play();
+                    });
+                });
+            };
+            IFrameAPI.createController(element, options, callback);
+            let iframe = document.querySelector('iframe');
+            iframe.classList.add('absolute');
+            iframe.classList.add('z-10');
+            iframe.removeAttribute('height');
+        }
+    }
 
     function audioPlay(){
         audioPlayer.current.audioEl.current.play();
@@ -34,7 +55,9 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
     }
 
     function fullScreen() {
-        audioPlay();
+        if(audioFiles.length > 0) {
+            audioPlay();
+        }
         if(!document.fullscreenElement) {
             document.documentElement.requestFullscreen();
         }else{
@@ -43,9 +66,9 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
     }
 
     return (
-        <div onDoubleClick={fullScreen}>
+        <div id="fullScreen" onDoubleClick={fullScreen}>
             <Head title="Laboratorio de análisis clínicos" />
-            <div className="relative z-10 sm:flex sm:justify-center sm:items-center">
+            <div className="relative z-50 sm:flex sm:justify-center sm:items-center">
                 <div className="p-6 sm:fixed sm:top-0 sm:right-0 text-end">
                     {auth.user ? (
                         <Link
@@ -66,8 +89,8 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
                     )}
                 </div>
             </div>
-            <div className="flex items-center justify-center w-full p-0 max-w-12xl">
-                {(visualFiles.length > 0 && audioFiles.length > 0)
+            <div className="relative flex items-center justify-center w-full p-0 max-w-12xl">
+                {(visualFiles.length > 0)
                     ? (<>
                         {mimes.includes(visualFiles[itemVisualFile].extension)
                             ?  (<>
@@ -93,16 +116,22 @@ export default function Welcome({ auth, visualFiles, audioFiles }) {
                                 playing
                                 loop={visualFiles.length == 1 ? true : false}
                                 onEnded={playReactPlayer}
+                                className="z-50"
                             />)
                         }
-                        <ReactAudioPlayer
-                            src={`../../storage/audios/${audioFiles[itemAudioFile].file}`}
-                            preload="auto"
-                            autoPlay={true}
-                            loop={audioFiles.length == 1 ? true : false}
-                            onEnded={playReactAudioPlayer}
-                            ref={audioPlayer}
-                        />
+                        {audioFiles.length > 0
+                            ?   (<ReactAudioPlayer
+                                    src={`../../storage/audios/${audioFiles[itemAudioFile].file}`}
+                                    preload="auto"
+                                    autoPlay={true}
+                                    loop={audioFiles.length == 1 ? true : false}
+                                    onEnded={playReactAudioPlayer}
+                                    ref={audioPlayer}
+                                />)
+                            :   (
+                                    <div id="spotifyIframe"></div>
+                                )
+                        }
                       </>)
                     : (<div className="flex items-center min-h-screen text-gray-600 justify-items-center">
                         <div className="flex-row -mt-12 justify-items-center">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AudioFileController;
+use App\Http\Controllers\AudioFileSpotifyController;
 use App\Http\Controllers\PlaylistsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VisualFileController;
@@ -20,17 +21,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
-Route::resource('/playlists', PlaylistsController::class)
-    ->only('index', 'store', 'create', 'edit', 'show', 'destroy')
-    ->middleware(['auth', 'verified']);
+Route::middleware(['auth', 'verified'])->group(function(){
+    Route::resource('/playlists', PlaylistsController::class)
+    ->only('index', 'store', 'create', 'edit', 'show', 'destroy');
 
-Route::resource('/visual-file', VisualFileController::class)
-    ->only('store', 'destroy')
-    ->middleware(['auth', 'verified']);
+    Route::resource('/visual-file', VisualFileController::class)
+        ->only('store', 'destroy');
 
-Route::resource('/audio-file', AudioFileController::class)
-    ->only('store', 'destroy')
-    ->middleware(['auth', 'verified']);
+    Route::resource('/audio-file', AudioFileController::class)
+        ->only('store', 'destroy');
+
+    Route::resource('/audio-file-spotify', AudioFileSpotifyController::class)
+        ->only('store', 'destroy');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

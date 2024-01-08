@@ -27,11 +27,11 @@ export default function CreateAudioFile({ listFile, audioFiles }) {
     return (
         <Card radius="sm" shadow="sm" className="w-full">
             <CardHeader className="border-b bg-primary">
-                <h3 className="font-bold text-white text-md">Añadir audios locales</h3>
+                <h3 className="font-bold text-white text-md">Crear lista con audios locales</h3>
             </CardHeader>
             <CardBody>
-                <div className="flex-row gap-4 lg:flex lg:grid-cols-2">
-                    <div className="w-full lg:w-[600px] -mt-2">
+                <div className="flex-row space-y-4">
+                    <div className="w-full -mt-2">
                         <form onSubmit={submit}>
                             <div className="mb-2">
                                 <FileInput
@@ -61,18 +61,19 @@ export default function CreateAudioFile({ listFile, audioFiles }) {
                             </div>
                         </form>
                     </div>
-
-                    <div className="w-full h-full border  rounded-lg ">
-                        <ul className="grid w-full grid-cols-1 px-4 py-2 list-decimal 2xl:grid-cols-2">
-                            {audioFiles.map(({id, file}) => (
-                                <Li
-                                    key={id}
-                                    file={file}
-                                    handleClick={() => destroy(`/audio-file/${id}`)}
-                                />
-                            ))}
-                        </ul>
-                    </div>
+                    {audioFiles.length > 0 &&
+                        <div className="w-full border rounded-lg ">
+                            <ul className="grid w-full grid-cols-1 px-4 py-2 list-decimal 2xl:grid-cols-2">
+                                {audioFiles.map(({id, file}) => (
+                                    <Li
+                                        key={id}
+                                        file={file}
+                                        handleClick={() => destroy(`/audio-file/${id}`)}
+                                    />
+                                ))}
+                            </ul>
+                        </div>
+                    }
                 </div>
             </CardBody>
         </Card>
@@ -83,7 +84,7 @@ const Li = ({ file, handleClick }) => {
     return (
         <li className="mx-6 my-2">
             <div className="flex justify-between w-full border-b-1">
-                <div className="text-gray-600 pr-4">{file}</div>
+                <div className="pr-4 text-sm text-gray-600">{file}</div>
                 <div className="relative flex items-center justify-center gap-2">
                     <Tooltip showArrow={true} content="Eliminar">
                         <span onClick={handleClick} className="text-lg cursor-pointer text-default-400 active:opacity-50">
