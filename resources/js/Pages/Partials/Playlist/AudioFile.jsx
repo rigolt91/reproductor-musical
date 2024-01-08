@@ -25,58 +25,49 @@ export default function CreateAudioFile({ listFile, audioFiles }) {
     }
 
     return (
-        <Card radius="sm" shadow="sm" className="w-full">
-            <CardHeader className="border-b bg-primary">
-                <h3 className="font-bold text-white text-md">Crear lista con audios locales</h3>
-            </CardHeader>
-            <CardBody>
-                <div className="flex-row space-y-4">
-                    <div className="w-full -mt-2">
-                        <form onSubmit={submit}>
-                            <div className="mb-2">
-                                <FileInput
-                                    name="audio_file"
-                                    label="Subir archivo"
-                                    description="MP3, WAV hasta 250MB"
-                                    value={data.file}
-                                    onChange={e => setData('file', e.target.files[0])}
-                                    className="file:border-0"
-                                    icon={
-                                        <SoundIcon color="#9ca3af" width="34" height="48" />
-                                    }
-                                    file={data.file && data.file}
-                                    errorMessage={errors.file}
-                                />
-                                {progress && (
-                                    <Progress aria-label="Loading..." value={progress.percentage} className="max-w-md"/>
-                                )}
-                            </div>
-                            <div className="flex justify-end mt-2 mb-4 space-x-3 lg:mb-0">
-                                <DefaultButton type="button" onPress={() => reset()}>
-                                    Cancelar
-                                </DefaultButton>
-                                <PrimaryButton disabled={processing}>
-                                    Guardar
-                                </PrimaryButton>
-                            </div>
-                        </form>
+        <div className="flex-row space-y-4 lg:flex lg:space-y-0 lg:space-x-4 mb-2">
+            <div className="w-full lg:w-[600px] -mt-2">
+                <form onSubmit={submit}>
+                    <div className="mb-2">
+                        <FileInput
+                            name="audio_file"
+                            label="Subir archivo"
+                            description="MP3, WAV hasta 250MB"
+                            value={data.file}
+                            onChange={e => setData('file', e.target.files[0])}
+                            className="file:border-0"
+                            icon={
+                                <SoundIcon color="#9ca3af" width="34" height="48" />
+                            }
+                            file={data.file && data.file}
+                            errorMessage={errors.file}
+                        />
+                        {progress && (
+                            <Progress aria-label="Loading..." value={progress.percentage} className="max-w-md"/>
+                        )}
                     </div>
-                    {audioFiles.length > 0 &&
-                        <div className="w-full border rounded-lg ">
-                            <ul className="grid w-full grid-cols-1 px-4 py-2 list-decimal 2xl:grid-cols-2">
-                                {audioFiles.map(({id, file}) => (
-                                    <Li
-                                        key={id}
-                                        file={file}
-                                        handleClick={() => destroy(`/audio-file/${id}`)}
-                                    />
-                                ))}
-                            </ul>
-                        </div>
-                    }
-                </div>
-            </CardBody>
-        </Card>
+                    <div className="flex justify-end mt-2 mb-4 space-x-3 lg:mb-0">
+                        <DefaultButton type="button" onPress={() => reset()}>
+                            Cancelar
+                        </DefaultButton>
+                        <PrimaryButton disabled={processing}>
+                            Guardar
+                        </PrimaryButton>
+                    </div>
+                </form>
+            </div>
+            <div className="w-full border rounded-lg ">
+                <ul className="grid w-full grid-cols-1 px-4 py-2 list-decimal 2xl:grid-cols-2">
+                    {audioFiles.map(({id, file}) => (
+                        <Li
+                            key={id}
+                            file={file}
+                            handleClick={() => destroy(`/audio-file/${id}`)}
+                        />
+                    ))}
+                </ul>
+            </div>
+        </div>
     );
 }
 
