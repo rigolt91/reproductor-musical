@@ -1,17 +1,16 @@
-import DefaultButton from "@/Components/DefaultButton";
 import DeleteIcon from "@/Components/Icons/DeleteIcon";
 import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
-import { Card, CardBody, CardHeader, Progress, Tooltip } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Progress, Select, Tooltip } from "@nextui-org/react";
 import { useRef } from "react";
 
-export default function CreateAudioFileSpotify({ listFile, audioFiles }) {
-    const titleInput = useRef();
+export default function CreateAudioFileSpotify({ listFile, audioFilesSpotify }) {
+    const urlInput = useRef();
 
     const {data, setData, post, delete: destroy, errors, progress, reset, processing} = useForm({
         listFileId: listFile,
-        title: '',
-        file: '',
+        url: '',
     });
 
     function submit(e) {
@@ -25,49 +24,68 @@ export default function CreateAudioFileSpotify({ listFile, audioFiles }) {
     return (
         <Card radius="sm" shadow="sm" className="w-full">
             <CardHeader className="border-b bg-primary">
-                <h3 className="font-bold text-white text-md">Añadir audios desde spotify</h3>
+                <h3 className="font-bold text-white text-md">Añadir lista de audio de spotify</h3>
             </CardHeader>
             <CardBody>
-                <div className="flex-row gap-4 lg:flex lg:grid-cols-2">
-                    <div className="w-full lg:w-[600px] -mt-2">
+                <div className="flex-row space-y-4">
+                    <div className="w-full -mt-2">
                         <form onSubmit={submit}>
-                            <div className="flex justify-end mt-2 mb-4 space-x-3 lg:mb-0">
-                                <DefaultButton type="button" onPress={() => reset()}>
-                                    Cancelar
-                                </DefaultButton>
-                                <PrimaryButton disabled={processing}>
-                                    Guardar
-                                </PrimaryButton>
+                            <div className="flex items-center my-2">
+                                <TextInput
+                                    id="url"
+                                    label="Url"
+                                    baseRef={urlInput}
+                                    value={data.url}
+                                    onChange={e => setData('url', e.target.value)}
+                                    type="text"
+                                    autoComplete="url"
+                                    required
+                                    errorMessage={errors.url}
+                                    endContent={
+                                        <PrimaryButton disabled={processing}>
+                                            Guardar
+                                        </PrimaryButton>
+                                    }
+                                />
+
                             </div>
                         </form>
                     </div>
-
-                    <div className="w-full h-full border  rounded-lg ">
-                        <ul className="grid w-full grid-cols-1 px-4 py-2 list-decimal 2xl:grid-cols-2">
-                            {audioFiles.map(({id, file}) => (
-                                <Li
-                                    key={id}
-                                    file={file}
-                                    handleClick={() => destroy(`/audio-file/${id}`)}
-                                />
-                            ))}
-                        </ul>
-                    </div>
+                    {audioFilesSpotify.length > 0 &&
+                        <div className="w-full">
+                            <ul className="grid w-full grid-cols-1 py-2">
+                                {audioFilesSpotify.map(({id, type, file}) => (
+                                    <Li
+                                        key={id}
+                                        type={type}
+                                        file={file}
+                                        handleClick={() => destroy(`/audio-file-spotify/${id}`)}
+                                    />
+                                ))}
+                            </ul>
+                        </div>
+                    }
                 </div>
             </CardBody>
         </Card>
     );
 }
 
-const Li = ({ file, handleClick }) => {
+const Li = ({ type, file, handleClick }) => {
     return (
-        <li className="mx-6 my-2">
-            <div className="flex justify-between w-full border-b-1">
-                <div className="text-gray-600 pr-4">{file}</div>
-                <div className="relative flex items-center justify-center gap-2">
+        <li className="my-1">
+            <div className="relative flex justify-between w-full">
+                <iframe
+                    src={`https://open.spotify.com/embed/${type}/${file}?utm_source=generator`}
+                    width="100%"
+                    height="500"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"
+                ></iframe>
+                <div className="absolute flex items-center justify-center gap-2 rounded right-3 top-14">
                     <Tooltip showArrow={true} content="Eliminar">
                         <span onClick={handleClick} className="text-lg cursor-pointer text-default-400 active:opacity-50">
-                            <DeleteIcon width='16' height='18' className="hover:scale-125" />
+                            <DeleteIcon width='32' height='32' className="p-1 bg-white rounded-full hover:scale-125" />
                         </span>
                     </Tooltip>
                 </div>

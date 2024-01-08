@@ -4,7 +4,7 @@ import VisualFile from './VisualFile';
 import AudioFile from './AudioFile';
 import CreateAudioFileSpotify from './AudioFileSpotify';
 
-export default function Playlist({ auth, listFile, visualFiles, audioFiles }) {
+export default function Playlist({ auth, listFile, visualFiles, audioFiles, audioFilesSpotify }) {
     return(
         <AuthenticatedLayout
             user={auth.user}
@@ -21,8 +21,10 @@ export default function Playlist({ auth, listFile, visualFiles, audioFiles }) {
                 <div className="px-6 mx-auto max-w-12xl">
                     <div className="grid grid-cols-1 gap-4">
                         <VisualFile listFile={listFile.id} visualFiles={visualFiles} />
-                        <AudioFile listFile={listFile.id} audioFiles={audioFiles} />
-                        <CreateAudioFileSpotify listFile={listFile.id} audioFiles={audioFiles} />
+                        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                            <AudioFile listFile={listFile.id} audioFiles={audioFiles} />
+                            <CreateAudioFileSpotify listFile={listFile.id} audioFilesSpotify={audioFilesSpotify} />
+                        </div>
                     </div>
                 </div>
             </div>

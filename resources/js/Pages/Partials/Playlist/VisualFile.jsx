@@ -75,8 +75,8 @@ export default function CreateVisualFile({ listFile, visualFiles }) {
                         </form>
                     </div>
 
-                    <div className="w-full h-full border rounded-lg p-1">
-                        <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4">
+                    <div className="w-full h-full p-1 border rounded-lg">
+                        <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3">
                             {visualFiles.map(({ id, title, file, extension }) => (
                                 <li key={id} className="p-2 border rounded-lg bg-gray-50 hover:bg-gray-100 hover:shadow-lg">
                                     <Li
@@ -98,13 +98,13 @@ export default function CreateVisualFile({ listFile, visualFiles }) {
 
 const Li = ({ title, file, extension, handleClick }) => {
     return (
-        <div className="flex w-full items-center">
+        <div className="flex items-center w-full">
             <div className="bg-gray-300 rounded-lg">
                 {extension == 'png' || extension == 'jpg' || extension == 'jpeg'
                     ?  <Image
                             alt="NextUI hero Image"
                             radius="sm"
-                            className="border bg-primary w-32 h-16"
+                            className="w-32 h-16 border bg-primary"
                             src={`../../storage/images/${file}`}
                         />
                     : <video
