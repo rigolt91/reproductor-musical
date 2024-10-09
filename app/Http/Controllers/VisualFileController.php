@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ListFile;
 use App\Models\VisualFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class VisualFileController extends Controller
@@ -20,33 +21,54 @@ class VisualFileController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'file' => 'required|mimes:png,jpg,mpg,avi,mp4|max:256000',
+            'files' => 'required|array',
         ]);
 
-        $file = $request->file('file');
-        $name = $file->hashName();
-        $extension = $file->extension();
+        try {
+            $files = $request->file('files');
 
-        $this->isImage($extension) ? $file->storeAs('public/images', $name) : $file->storeAs('public/videos/', $name);
+            foreach ($files as $file) {
+                $name = $file->hashName();
+                $extension = $file->extension();
 
-        $listFile = $this->listFile->find($request->listFileId);
+                if(! $this->isImage($extension) && ! $this->isVideo($extension)) {
+                    return redirect()->back()->withErrors(['files' => 'El campo file debe ser de tipo (png, jpeg, jpg, mpg, avi, mp4)']);
+                }
 
-        $listFile->visualFiles()->create([
-            'title' => $request->title,
-            'file' => $name,
-            'extension' => $extension
-        ]);
+                if($this->isImage($extension)) {
+                    $file->storeAs('public/images/', $name);
+                }
+
+                if($this->isVideo($extension)) {
+                    $file->storeAs('public/videos/', $name);
+                }
+
+                $listFile = $this->listFile->find($request->listFileId);
+
+                $listFile->visualFiles()->create([
+                    'title' => $request->title,
+                    'file' => $name,
+                    'extension' => $extension
+                ]);
+            }
+        } catch (\Throwable $th) {
+            Log::info("Error VisualFileController::store(), cannot upload file. (".$th->getMessage().")");
+        }
 
         return to_route('playlists.edit', $request->listFileId);
     }
 
     public function destroy(VisualFile $visualFile)
     {
-        $listFileId = $visualFile->list_file_id;
+        try {
+            $listFileId = $visualFile->list_file_id;
 
-        $this->destroyFile($visualFile);
+            $this->destroyFile($visualFile);
 
-        $visualFile->delete();
+            $visualFile->delete();
+        } catch (\Throwable $th) {
+            Log::info("Error VisualFileController::destroy(), cannot delete file. ".$th->getMessage());
+        }
 
         return to_route('playlists.edit', $listFileId);
     }
@@ -62,6 +84,13 @@ class VisualFileController extends Controller
     public function isImage($extension)
     {
         $extensions = ['png', 'jpg', 'jpeg'];
+
+        return in_array($extension, $extensions) ? true : false;
+    }
+
+    public function isVideo($extension)
+    {
+        $extensions = ['mpg', 'avi', 'mp4'];
 
         return in_array($extension, $extensions) ? true : false;
     }

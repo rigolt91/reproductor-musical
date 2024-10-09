@@ -13,7 +13,7 @@ export default function CreateAudioFile({ listFile, audioFiles }) {
     const {data, setData, post, delete: destroy, errors, progress, reset, processing} = useForm({
         listFileId: listFile,
         title: '',
-        file: '',
+        files: [],
     });
 
     function submit(e) {
@@ -25,7 +25,7 @@ export default function CreateAudioFile({ listFile, audioFiles }) {
     }
 
     return (
-        <div className="flex-row space-y-4 lg:flex lg:space-y-0 lg:space-x-4 mb-2">
+        <div className="flex-row mb-2 space-y-4 lg:flex lg:space-y-0 lg:space-x-4">
             <div className="w-full lg:w-[600px] -mt-2">
                 <form onSubmit={submit}>
                     <div className="mb-2">
@@ -33,14 +33,15 @@ export default function CreateAudioFile({ listFile, audioFiles }) {
                             name="audio_file"
                             label="Subir archivo"
                             description="MP3, WAV hasta 250MB"
-                            value={data.file}
-                            onChange={e => setData('file', e.target.files[0])}
+                            value={data.files}
+                            onChange={e => setData('files', e.target.files)}
                             className="file:border-0"
+                            multiple="multiple"
                             icon={
                                 <SoundIcon color="#9ca3af" width="34" height="48" />
                             }
-                            file={data.file && data.file}
-                            errorMessage={errors.file}
+                            files={data.files}
+                            errorMessage={errors.files}
                         />
                         {progress && (
                             <Progress aria-label="Loading..." value={progress.percentage} className="max-w-md"/>

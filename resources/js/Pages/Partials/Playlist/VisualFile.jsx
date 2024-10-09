@@ -14,7 +14,7 @@ export default function CreateVisualFile({ listFile, visualFiles }) {
     const {data, setData, post, delete: destroy, errors, progress, reset, processing} = useForm({
         listFileId: listFile,
         title: '',
-        file: '',
+        files: [],
     });
 
     function submit(e) {
@@ -31,10 +31,10 @@ export default function CreateVisualFile({ listFile, visualFiles }) {
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-film" viewBox="0 0 16 16">
                     <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm4 0v6h8V1zm8 8H4v6h8zM1 1v2h2V1zm2 3H1v2h2zM1 7v2h2V7zm2 3H1v2h2zm-2 3v2h2v-2zM15 1h-2v2h2zm-2 3v2h2V4zm2 3h-2v2h2zm-2 3v2h2v-2zm2 3h-2v2h2z"/>
                 </svg>
-                <h3 className="font-bold text-base ml-3">Añadir archivos visuales</h3>
+                <h3 className="ml-3 text-base font-bold">Añadir archivos visuales</h3>
             </CardHeader>
             <CardBody>
-                <Divider className="-mt-3 mb-2 bg-gray-200" />
+                <Divider className="mb-2 -mt-3 bg-gray-200" />
                 <div className="flex-row gap-4 lg:flex lg:grid-cols-2">
                     <div className="w-full lg:w-[600px]">
                         <form onSubmit={submit}>
@@ -54,15 +54,17 @@ export default function CreateVisualFile({ listFile, visualFiles }) {
                             <div className="mb-2">
                                 <FileInput
                                     name="visual_file"
-                                    label="Subir archivo"
+                                    label="Subir archivos"
                                     description="PNG, JPG, MPG, AVI, MP4 hasta 250MB"
-                                    onChange={e => setData('file', e.target.files[0])}
+                                    value={data.files}
+                                    onChange={e => setData('files', e.target.files)}
                                     className="file:border-0"
+                                    multiple="multiple"
                                     icon={
                                         <FileIcon color="#9ca3af" width="30" height="48" />
                                     }
-                                    file={data.file && data.file}
-                                    errorMessage={errors.file}
+                                    files={data.files && data.files}
+                                    errorMessage={errors.files}
                                 />
                                 {progress && (
                                     <Progress aria-label="Loading..." value={progress.percentage} className="max-w-md"/>
