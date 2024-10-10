@@ -24,9 +24,21 @@ export default function CreateAudioFile({ listFile, audioFiles }) {
         });
     }
 
+    function handleDrop(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        setData('files', e.dataTransfer.files);
+    }
+
     return (
         <div className="flex-row mb-2 space-y-4 lg:flex lg:space-y-0 lg:space-x-4">
-            <div className="w-full lg:w-[600px] -mt-2">
+            <div className="w-full lg:w-[600px] -mt-2"
+                draggable="true"
+                onDrop={handleDrop}
+                onDragEnter={e => e.preventDefault()}
+                onDragOver={e => e.preventDefault()}
+                onDragLeave={e => e.preventDefault()}
+            >
                 <form onSubmit={submit}>
                     <div className="mb-2">
                         <FileInput
@@ -64,6 +76,7 @@ export default function CreateAudioFile({ listFile, audioFiles }) {
                             key={id}
                             file={file}
                             handleClick={() => destroy(`/audio-file/${id}`)}
+                            processing={processing}
                         />
                     ))}
                 </ul>
@@ -72,16 +85,21 @@ export default function CreateAudioFile({ listFile, audioFiles }) {
     );
 }
 
-const Li = ({ file, handleClick }) => {
+const Li = ({ file, handleClick, processing }) => {
     return (
         <li className="mx-6 my-2">
             <div className="flex justify-between w-full border-b-1">
                 <div className="pr-4 text-sm text-gray-600">{file}</div>
                 <div className="relative flex items-center justify-center gap-2">
                     <Tooltip showArrow={true} content="Eliminar">
-                        <span onClick={handleClick} className="text-lg cursor-pointer text-default-400 active:opacity-50">
+                        <button
+                            type="button"
+                            className="text-lg cursor-pointer text-default-400 active:opacity-50"
+                            onClick={handleClick}
+                            disabled={processing}
+                        >
                             <DeleteIcon width='16' height='18' className="hover:scale-125" />
-                        </span>
+                        </button>
                     </Tooltip>
                 </div>
             </div>

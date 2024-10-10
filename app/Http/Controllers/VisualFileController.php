@@ -20,7 +20,6 @@ class VisualFileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
             'files' => 'required|array',
         ]);
 
@@ -29,10 +28,11 @@ class VisualFileController extends Controller
 
             foreach ($files as $file) {
                 $name = $file->hashName();
+                $originalName = $file->getClientOriginalName();
                 $extension = $file->extension();
 
                 if(! $this->isImage($extension) && ! $this->isVideo($extension)) {
-                    return redirect()->back()->withErrors(['files' => 'El campo file debe ser de tipo (png, jpeg, jpg, mpg, avi, mp4)']);
+                    return redirect()->back()->withErrors(['files' => 'El archivo '.$originalName.' debe ser de tipo (png, jpeg, jpg, mpg, avi, mp4)']);
                 }
 
                 if($this->isImage($extension)) {
@@ -46,7 +46,7 @@ class VisualFileController extends Controller
                 $listFile = $this->listFile->find($request->listFileId);
 
                 $listFile->visualFiles()->create([
-                    'title' => $request->title,
+                    'title' => $originalName,
                     'file' => $name,
                     'extension' => $extension
                 ]);

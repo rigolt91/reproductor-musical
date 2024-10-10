@@ -13,7 +13,6 @@ export default function CreateVisualFile({ listFile, visualFiles }) {
 
     const {data, setData, post, delete: destroy, errors, progress, reset, processing} = useForm({
         listFileId: listFile,
-        title: '',
         files: [],
     });
 
@@ -23,6 +22,12 @@ export default function CreateVisualFile({ listFile, visualFiles }) {
             onSuccess: () => reset(),
             preserveScroll: true,
         });
+    }
+
+    function handleDrop(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        setData('files', e.dataTransfer.files);
     }
 
     return (
@@ -36,21 +41,15 @@ export default function CreateVisualFile({ listFile, visualFiles }) {
             <CardBody>
                 <Divider className="mb-2 -mt-3 bg-gray-200" />
                 <div className="flex-row gap-4 lg:flex lg:grid-cols-2">
-                    <div className="w-full lg:w-[600px]">
+                    <div
+                        className="w-full lg:w-[600px]"
+                        draggable="true"
+                        onDrop={handleDrop}
+                        onDragEnter={e => e.preventDefault()}
+                        onDragOver={e => e.preventDefault()}
+                        onDragLeave={e => e.preventDefault()}
+                    >
                         <form onSubmit={submit}>
-                            <div className="mb-2">
-                                <TextInput
-                                    id="title"
-                                    label="Título"
-                                    baseRef={titleInput}
-                                    value={data.title}
-                                    onChange={e => setData('title', e.target.value)}
-                                    type="text"
-                                    autoComplete="title"
-                                    autoFocus
-                                    errorMessage={errors.title}
-                                />
-                            </div>
                             <div className="mb-2">
                                 <FileInput
                                     name="visual_file"
@@ -91,6 +90,7 @@ export default function CreateVisualFile({ listFile, visualFiles }) {
                                         file={file}
                                         extension={extension}
                                         handleClick={() => destroy(`/visual-file/${id}`)}
+                                        processing={processing}
                                     />
                                 </li>
                             ))}
@@ -102,7 +102,7 @@ export default function CreateVisualFile({ listFile, visualFiles }) {
     );
 }
 
-const Li = ({ title, file, extension, handleClick }) => {
+const Li = ({ title, file, extension, handleClick, processing }) => {
     return (
         <div className="flex items-center w-full">
             <div className="bg-gray-300 rounded-lg">
@@ -123,12 +123,17 @@ const Li = ({ title, file, extension, handleClick }) => {
             </div>
 
             <div className="flex items-center justify-between w-full px-3">
-                <div className="text-gray-600">{title}</div>
+                <div className="text-gray-600">{title.slice(0, 40)}</div>
                 <div className="relative flex items-center justify-center gap-2">
                     <Tooltip showArrow={true} content="Eliminar">
-                        <span onClick={handleClick} className="text-lg cursor-pointer text-default-400 active:opacity-50">
+                        <button
+                            type="button"
+                            className="text-lg cursor-pointer text-default-400 active:opacity-50"
+                            onClick={handleClick}
+                            disabled={processing}
+                        >
                             <DeleteIcon width='16' height='18' className="hover:scale-150" />
-                        </span>
+                        </button>
                     </Tooltip>
                 </div>
             </div>

@@ -56,6 +56,7 @@ export default function CreateAudioFileSpotify({ listFile, audioFilesSpotify }) 
                                 type={type}
                                 file={file}
                                 handleClick={() => destroy(`/audio-file-spotify/${id}`)}
+                                processing={processing}
                             />
                         ))}
                     </ul>
@@ -65,7 +66,7 @@ export default function CreateAudioFileSpotify({ listFile, audioFilesSpotify }) 
     );
 }
 
-const Li = ({ type, file, handleClick }) => {
+const Li = ({ type, file, handleClick, processing }) => {
     return (
         <li className="my-3">
             <div className="relative flex justify-between w-full">
@@ -78,9 +79,14 @@ const Li = ({ type, file, handleClick }) => {
                 ></iframe>
                 <div className="absolute flex items-center justify-center gap-2 rounded right-[47%] -top-4">
                     <Tooltip showArrow={true} content="Eliminar">
-                        <span onClick={handleClick} className="text-lg cursor-pointer text-default-400 active:opacity-50">
+                        <button
+                            type="button"
+                            className="text-lg cursor-pointer text-default-400 active:opacity-50"
+                            onClick={handleClick}
+                            disabled={processing}
+                        >
                             <DeleteIcon width='32' height='32' className="p-1 bg-white rounded-full hover:scale-125" />
-                        </span>
+                        </button>
                     </Tooltip>
                 </div>
             </div>

@@ -13,26 +13,37 @@ export default function Welcome({ auth, visualFiles, audioFiles, audioFilesSpoti
     const mimes = ['jpg', 'png', 'jpeg'];
     const audioPlayer = useRef();
 
-    window.onSpotifyIframeApiReady = (IFrameAPI) => {
-        if(audioFiles.length == 0) {
-            let element = document.getElementById('spotifyIframe');
-            let options = {
-                uri: `spotify:${audioFilesSpotify.type}:${audioFilesSpotify.file}`
-            };
-            let callback = (EmbedController) => {
-                EmbedController.addListener('ready', () => {
-                    document.getElementById('fullScreen').addEventListener('dblclick', () => {
-                        EmbedController.play();
-                    });
-                });
-            };
-            IFrameAPI.createController(element, options, callback);
-            let iframe = document.querySelector('iframe');
-            iframe.classList.add('absolute');
-            iframe.classList.add('z-10');
-            iframe.removeAttribute('height');
+    useEffect(() => {
+        if(audioFiles.length > 0) {
+            audioPlay();
         }
-    }
+
+        try {
+            window.onSpotifyIframeApiReady = (IFrameAPI) => {
+                if(audioFiles.length == 0 && audioFilesSpotify && audioFilesSpotify.length != 0) {
+                    let element = document.getElementById('spotifyIframe');
+                    let options = {
+                        uri: `spotify:${audioFilesSpotify.type}:${audioFilesSpotify.file}`
+                    };
+                    let callback = (EmbedController) => {
+                        EmbedController.addListener('ready', () => {
+                            EmbedController.play();
+                            /*document.getElementById('fullScreen').addEventListener('dblclick', () => {
+                                EmbedController.play();
+                            });*/
+                        });
+                    };
+                    IFrameAPI.createController(element, options, callback);
+                    let iframe = document.querySelector('iframe');
+                    iframe.classList.add('absolute');
+                    iframe.classList.add('z-10');
+                    iframe.removeAttribute('height');
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [])
 
     function audioPlay(){
         audioPlayer.current.audioEl.current.play();
@@ -121,11 +132,10 @@ export default function Welcome({ auth, visualFiles, audioFiles, audioFilesSpoti
                                 />)
                             }
                             {audioFiles.length > 0
-                                &&   (<ReactAudioPlayer
+                                &&  (<ReactAudioPlayer
                                         src={`../../storage/audios/${audioFiles[itemAudioFile].file}`}
-                                        preload="metadata"
-                                        autoPlay={true}
-                                        controls
+                                        preload='auto'
+                                        autoPlay
                                         loop={audioFiles.length == 1 ? true : false}
                                         onEnded={playReactAudioPlayer}
                                         ref={audioPlayer}

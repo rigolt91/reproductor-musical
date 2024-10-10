@@ -46,7 +46,7 @@ export default function NavbarTop({ user, header }) {
                             </DropdownItem>
                             <DropdownItem
                                 key="logout"
-                                onClick={() => post('logout')}
+                                onClick={() => post(route('logout'))}
                             >
                                 {Lang.get('strings.Logout')}
                             </DropdownItem>
