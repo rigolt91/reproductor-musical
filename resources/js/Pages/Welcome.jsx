@@ -45,7 +45,7 @@ export default function Welcome({ auth, visualFiles, audioFiles, audioFilesSpoti
         }
     }, [])
 
-    function audioPlay(){
+    async function audioPlay(){
         audioPlayer.current.audioEl.current.play();
     }
 
@@ -57,7 +57,7 @@ export default function Welcome({ auth, visualFiles, audioFiles, audioFilesSpoti
         }
     }
 
-    function playReactAudioPlayer() {
+    async function playReactAudioPlayer() {
         if(audioFiles.length > 1 && itemAudioFile < audioFiles.length - 1) {
             setAudioVisualFile(itemAudioFile + 1);
         } else {
@@ -138,6 +138,7 @@ export default function Welcome({ auth, visualFiles, audioFiles, audioFilesSpoti
                                         autoPlay
                                         loop={audioFiles.length == 1 ? true : false}
                                         onEnded={playReactAudioPlayer}
+                                        onError={playReactAudioPlayer}
                                         ref={audioPlayer}
                                     />)
                             }
